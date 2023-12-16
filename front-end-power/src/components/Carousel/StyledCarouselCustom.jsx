@@ -1,0 +1,33 @@
+import styled from "styled-components";
+
+export const StyledCarouselCustom = styled.div`
+  .carousel {
+    margin-top: 3rem;
+  }
+
+  .carousel-control-next-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNlMDRmMDAiIGQ9Im0xMi4yIDEzbC0uOS45cS0uMjc1LjI3NS0uMjc1Ljd0LjI3NS43cS4yNzUuMjc1LjcuMjc1dC43LS4yNzVsMi42LTIuNnEuMy0uMy4zLS43dC0uMy0uN2wtMi42LTIuNnEtLjI3NS0uMjc1LS43LS4yNzV0LS43LjI3NXEtLjI3NS4yNzUtLjI3NS43dC4yNzUuN2wuOS45SDlxLS40MjUgMC0uNzEzLjI4OFQ4IDEycTAgLjQyNS4yODguNzEzVDkgMTNoMy4yWm0tLjIgOXEtMi4wNzUgMC0zLjktLjc4OHQtMy4xNzUtMi4xMzdxLTEuMzUtMS4zNS0yLjEzNy0zLjE3NVQyIDEycTAtMi4wNzUuNzg4LTMuOXQyLjEzNy0zLjE3NXExLjM1LTEuMzUgMy4xNzUtMi4xMzdUMTIgMnEyLjA3NSAwIDMuOS43ODh0My4xNzUgMi4xMzdxMS4zNSAxLjM1IDIuMTM4IDMuMTc1VDIyIDEycTAgMi4wNzUtLjc4OCAzLjl0LTIuMTM3IDMuMTc1cS0xLjM1IDEuMzUtMy4xNzUgMi4xMzhUMTIgMjJabTAtMnEzLjM1IDAgNS42NzUtMi4zMjVUMjAgMTJxMC0zLjM1LTIuMzI1LTUuNjc1VDEyIDRROC42NSA0IDYuMzI1IDYuMzI1VDQgMTJxMCAzLjM1IDIuMzI1IDUuNjc1VDEyIDIwWm0wLThaIi8+PC9zdmc+);
+    height: 3rem;
+  }
+
+  .carousel-control-prev-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNlMDRmMDAiIGQ9Im0xMiAxNmwxLjQtMS40bC0xLjYtMS42SDE2di0yaC00LjJsMS42LTEuNkwxMiA4bC00IDRsNCA0Wm0wIDZxLTIuMDc1IDAtMy45LS43ODh0LTMuMTc1LTIuMTM3cS0xLjM1LTEuMzUtMi4xMzctMy4xNzVUMiAxMnEwLTIuMDc1Ljc4OC0zLjl0Mi4xMzctMy4xNzVxMS4zNS0xLjM1IDMuMTc1LTIuMTM3VDEyIDJxMi4wNzUgMCAzLjkuNzg4dDMuMTc1IDIuMTM3cTEuMzUgMS4zNSAyLjEzOCAzLjE3NVQyMiAxMnEwIDIuMDc1LS43ODggMy45dC0yLjEzNyAzLjE3NXEtMS4zNSAxLjM1LTMuMTc1IDIuMTM4VDEyIDIyWm0wLTJxMy4zNSAwIDUuNjc1LTIuMzI1VDIwIDEycTAtMy4zNS0yLjMyNS01LjY3NVQxMiA0UTguNjUgNCA2LjMyNSA2LjMyNVQ0IDEycTAgMy4zNSAyLjMyNSA1LjY3NVQxMiAyMFptMC04WiIvPjwvc3ZnPg==);
+    height: 3rem;
+  }
+
+  .carousel-item {
+    position: relative;
+    height: 70vh;
+  }
+`;
+
+export const StyledImg = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  object-fit: cover;
+  bottom: 0;
+`;
