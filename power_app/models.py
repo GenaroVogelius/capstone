@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-import uuid
 from datetime import timedelta
 
 import cloudinary
