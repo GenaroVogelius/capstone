@@ -43,6 +43,12 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "power_app", # !agregaste esto
+    'rest_framework',# !agregaste esto
+    "corsheaders",# !agregaste esto
+    "django_crontab",# !agregaste esto
+    'rest_framework_simplejwt',# !agregaste esto
+    "cloudinary",# !agregaste esto
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -52,7 +58,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", # !agregaste esto
     "django.middleware.security.SecurityMiddleware",
+    # !agregaste white noise VER QUE PARA SERVIR STATIC FILES EN PRODUCCIÓN LO NECESTIAS
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -66,7 +75,7 @@ ROOT_URLCONF = "capstone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'front-end-power/dist'), os.path.join(BASE_DIR, 'power_app/templates/')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
