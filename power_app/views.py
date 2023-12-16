@@ -33,35 +33,35 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 
-@staff_member_required
-@require_GET
-def admin_usuario(request, dni):
-    if request.method == "GET":
-        try:
-            usuario = Usuario.objects.get(DNI=dni)
-            serializer = UsuarioSerializer(usuario, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Usuario.DoesNotExist:
-            return Response(
-                {"not found": f"Usuario with DNI {dni} does not exist"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+# @staff_member_required
+# @require_GET
+# def admin_usuario(request, dni):
+#     if request.method == "GET":
+#         try:
+#             usuario = Usuario.objects.get(DNI=dni)
+#             serializer = UsuarioSerializer(usuario, many=False)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         except Usuario.DoesNotExist:
+#             return Response(
+#                 {"not found": f"Usuario with DNI {dni} does not exist"},
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
 
-    elif request.method == "POST" and request.user.is_staff:
-        try:
-            user = Usuario.objects.get(DNI=dni)
-            Asistencia.objects.create(usuario=user)
-            return Response({"message": "asistencia tomada"}, status=status.HTTP_200_OK)
-        except Usuario.DoesNotExist:
-            return Response(
-                {"not found": f"Usuario with DNI {dni} does not exist"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-    else:
-        return Response(
-            {"error": "Permission denied"},
-            status=status.HTTP_403_FORBIDDEN,
-        )
+#     elif request.method == "POST" and request.user.is_staff:
+#         try:
+#             user = Usuario.objects.get(DNI=dni)
+#             Asistencia.objects.create(usuario=user)
+#             return Response({"message": "asistencia tomada"}, status=status.HTTP_200_OK)
+#         except Usuario.DoesNotExist:
+#             return Response(
+#                 {"not found": f"Usuario with DNI {dni} does not exist"},
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#     else:
+#         return Response(
+#             {"error": "Permission denied"},
+#             status=status.HTTP_403_FORBIDDEN,
+#         )
 
 
 
