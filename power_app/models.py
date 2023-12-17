@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import timedelta
 
-
 from django.contrib.auth.hashers import (check_password, identify_hasher,
                                          make_password)
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
@@ -31,6 +30,11 @@ class UserManager(models.Manager):
             
 
 
+
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name_plural = 'Fotos de carrousel'
 
 
 class Usuario(models.Model):
@@ -214,6 +218,23 @@ class RutinaFormulario(models.Model):
     def __str__(self):
         return("Formulario de rutinas")
 
+
+class Detalle_de_ejercicio(models.Model):
+    ejercicio = models.CharField(max_length=200)
+
+
+
+    def save(self, *args, **kwargs):
+        # ?This will set self.activo to True if self.usuario.activo is True, and False 
+        self.ejercicio = self.ejercicio.title()
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.ejercicio
+
+    class Meta:
+        verbose_name_plural = 'Cargar Ejercicios'
 
 
 class Tarifa(models.Model):
