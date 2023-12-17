@@ -1,8 +1,7 @@
 from django.db import models
 from datetime import timedelta
 
-import cloudinary
-from cloudinary.models import CloudinaryField
+
 from django.contrib.auth.hashers import (check_password, identify_hasher,
                                          make_password)
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
@@ -31,25 +30,7 @@ class UserManager(models.Manager):
                 existing_user.save()
             
 
-class FotosGimnasio(models.Model):
-    nombre = models.CharField(max_length=50)
-    foto_del_carrusel = CloudinaryField('image', 
-    folder='power-gym-carrousel', 
-    overwrite=True)
-    orden = models.PositiveIntegerField(unique=True, blank=True, null=True)
 
-
-    def delete(self, *args, **kwargs):
-        # Remove the asset from Cloudinary before deleting the instance
-        if self.foto_del_carrusel and self.foto_del_carrusel.public_id:
-            cloudinary.api.delete_resources([self.gif.public_id], type="upload")
-        
-        super().delete(*args, **kwargs)
-
-    def __str__(self):
-        return self.nombre
-    class Meta:
-        verbose_name_plural = 'Fotos de carrousel'
 
 
 class Usuario(models.Model):
@@ -233,34 +214,6 @@ class RutinaFormulario(models.Model):
     def __str__(self):
         return("Formulario de rutinas")
 
-
-class Detalle_de_ejercicio(models.Model):
-    ejercicio = models.CharField(max_length=200)
-    gif = CloudinaryField('image', 
-    folder='power-gym-gif', 
-    overwrite=True, 
-    blank=True,
-    null=True,)
-
-
-    def save(self, *args, **kwargs):
-        # ?This will set self.activo to True if self.usuario.activo is True, and False 
-        self.ejercicio = self.ejercicio.title()
-
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        # Remove the asset from Cloudinary before deleting the instance
-        if self.gif and self.gif.public_id:
-            cloudinary.api.delete_resources([self.gif.public_id], type="upload")
-
-        super().delete(*args, **kwargs)
-
-    def __str__(self):
-        return self.ejercicio
-
-    class Meta:
-        verbose_name_plural = 'Cargar Ejercicios'
 
 
 class Tarifa(models.Model):
