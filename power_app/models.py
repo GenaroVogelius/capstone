@@ -123,7 +123,7 @@ class Usuario(models.Model):
         # ? if you remove the super().save(*args, **kwargs) call, the custom behavior you have defined in your save method will still be executed, but the model instance will not be saved to the database.
 
     def __str__(self):
-        return f"Usuario: {self.nombre} DNI: {self.DNI}"
+        return f"Usuario: {str(self.nombre)} DNI: {self.DNI}"
 
     # ? auto_now=True updates the value of the field to the current date and time every time the model is saved to the database. This is useful when you want to keep track of the last time the model was updated.
 
