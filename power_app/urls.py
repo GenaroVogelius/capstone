@@ -17,7 +17,7 @@ urlpatterns = [
     # path('get_users/', views.get_users),
 
     # API rest
-    path('admin_usuario/<int:dni>', views.admin_usuario, name="usuario_admin_view"),
+    # path('admin_usuario/<int:dni>', views.admin_usuario, name="usuario_admin_view"),
     path('usuario/<int:dni>', views.usuario, name="usuario"),
     path('tarifas/', views.tarifas, name="tarifas"),
     path('rutina/<int:dni>/<int:sesion>', views.rutina, name="rutina"),
