@@ -180,5 +180,5 @@ power_site.register(Usuario, UsuarioAdmin)
 power_site.register(Asistencia, AsistenciaAdmin)
 power_site.register(Rutina, RutinaAdmin)
 power_site.register(Servicio, ServicioAdmin)
-
+power_site.register(Detalle_de_ejercicio, Detalle_de_ejercicioAdmin)
 power_site.register(Tarifa, TarifaAdmin)
