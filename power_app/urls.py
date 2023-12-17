@@ -1,11 +1,10 @@
 
 from django.urls import path
 from django.views.generic import TemplateView
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
+
 from . import views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 # from .views import MyTokenObtainPairView
 # from .views import *
@@ -18,7 +17,6 @@ urlpatterns = [
     # path('get_users/', views.get_users),
 
     # API rest
-    path('admin_usuario/<int:dni>', views.admin_usuario, name="usuario_admin_view"),
     path('usuario/<int:dni>', views.usuario, name="usuario"),
     path('tarifas/', views.tarifas, name="tarifas"),
     path('rutina/<int:dni>/<int:sesion>', views.rutina, name="rutina"),
