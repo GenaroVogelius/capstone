@@ -31,10 +31,6 @@ class UserManager(models.Manager):
 
 
 
-    def __str__(self):
-        return self.nombre
-    class Meta:
-        verbose_name_plural = 'Fotos de carrousel'
 
 
 class Usuario(models.Model):
