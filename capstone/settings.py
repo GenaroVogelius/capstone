@@ -140,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-ANGUAGE_CODE = "es-ar"
+LANGUAGE_CODE = "es-ar"
 
 TIME_ZONE = "America/Argentina/Buenos_Aires"
 
