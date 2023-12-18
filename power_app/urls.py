@@ -23,7 +23,7 @@ urlpatterns = [
     path('sesiones/<int:dni>', views.sesiones, name="sesiones"),
     path('servicios/', views.servicios, name="servicios"),
     path('requestRutine/', views.request_rutine, name="request_rutine"),
-    # path('carrousel/', views.carrousel, name="carrousel_photos"),
+    path('carrousel/', views.carrousel, name="carrousel_photos"),
 
     path('pdf_view/<int:dni>', views.ViewPDF.as_view(), name="pdf_view"),
 
