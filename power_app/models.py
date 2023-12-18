@@ -231,15 +231,25 @@ class RutinaFormulario(models.Model):
 
 
 class Detalle_de_ejercicio(models.Model):
-    ejercicio = models.CharField(max_length=200)
-
+    gif = CloudinaryField('image', 
+    folder='power-gym-gif', 
+    overwrite=True, 
+    blank=True,
+    null=True,)
 
 
     def save(self, *args, **kwargs):
         # ?This will set self.activo to True if self.usuario.activo is True, and False 
         self.ejercicio = self.ejercicio.title()
+
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        # Remove the asset from Cloudinary before deleting the instance
+        if self.gif and self.gif.public_id:
+            cloudinary.api.delete_resources([self.gif.public_id], type="upload")
+
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.ejercicio
