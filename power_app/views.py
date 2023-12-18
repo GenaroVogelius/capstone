@@ -293,8 +293,9 @@ class ViewPDF(View):
 
 
     def get(self, request, dni, *args, **kwargs):
-        if request.get_host() not in settings.ALLOWED_HOSTS:
-            return HttpResponseForbidden("Access denied")
+        # cambias esto de autenticación
+        # if request.get_host() not in settings.ALLOWED_HOSTS:
+        #     return HttpResponseForbidden("Access denied")
         data = self.get_info(dni)
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
