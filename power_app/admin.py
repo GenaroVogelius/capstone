@@ -142,6 +142,7 @@ class TarifaAdmin(admin.ModelAdmin):
 
 
 class Detalle_de_ejercicioAdmin(admin.ModelAdmin):
+    list_display = ('gif')
     search_fields = ("detalles_de_ejercicio",)
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
