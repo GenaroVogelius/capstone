@@ -10,7 +10,13 @@ import {secondaryColor, primaryColor, thirdColor, fourthColor} from "../../Style
 
 
 export const StyledRutinaHeading = styled.div`
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: auto;
+  white-space: nowrap;
+  padding-bottom: 13px;
+  color:${primaryColor}
 
-
+ 
 `;
-

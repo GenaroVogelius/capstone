@@ -17,8 +17,6 @@ function Rutina({
   // accedes a la sesion de rutina a la cual se hizo click
   const rutinaDeSesion = dictDeRutinas[indexClicked];
 
-  console.log(rutinaDeSesion)
-
   // mostras la el ejercicio de la rutina correspondiente a la currentPage
   const ejercicioInformation = rutinaDeSesion
     ? rutinaDeSesion[currentPage]

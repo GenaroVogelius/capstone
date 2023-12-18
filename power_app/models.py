@@ -109,15 +109,16 @@ class Usuario(models.Model):
 
         # la contraseña hasheada la tuvimos que escribir entre los condicionales, sino cada vez que se acccedia desde el panel de admin a los la lista de usuarios se daba un trigger de la función y se hasheaba contraseñas con hash.
         if not existing_user:
+            print("no es un usuario existente")
             hashed_password = make_password(self.password)
             self.password = hashed_password
             UserManager().create_user(self.DNI, hashed_password)
         elif existing_user.password != self.password or existing_user.username != str(self.DNI):
+            print("es un usuario existente")
             hashed_password = make_password(self.password)
             self.password = hashed_password
             UserManager().modify_existing_user(existing_user, self.DNI, self.password)
 
-        # UserManager().delete_user()
         super().save(*args, **kwargs)
         # ? Al poner super() lo que hace es buscar de las clases padres (en este caso models.Model) el metodo que vos le indicas (.save()). al ponerlo asi agregas las lineas de codigo que escribiste y después el resto será igual a lo que indica la clase padre, sirve para mantener la inheritance de la clase padre y no sobreescribir cosas que no queres.
         # ? if you remove the super().save(*args, **kwargs) call, the custom behavior you have defined in your save method will still be executed, but the model instance will not be saved to the database.

@@ -7,8 +7,8 @@ import SobreNosotros from "./Pages/main_page/SobreNosotros";
 
 import React, { useContext } from "react";
 import { DatosDeContexto } from "./Context/Context";
-import LogIn from "./Pages/LogIn/LogIn";
 import GymEntrance from "./Pages/gymEntrance/GymEntrance";
+import LogIn from "./Pages/main_page/LogIn";
 import SoySocio from "./Pages/main_page/SoySocio";
 import CommonComponents from "./components/CommonComponets/CommonComponents";
 
