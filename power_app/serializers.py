@@ -84,18 +84,18 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-# class CarrouselSerializer(serializers.ModelSerializer):
+class CarrouselSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = FotosGimnasio
-#         fields = ("foto_del_carrusel",)
+    class Meta:
+        model = FotosGimnasio
+        fields = ("foto_del_carrusel",)
 
-#     def to_representation(self, instance):
-#         data = super().to_representation(instance)
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
 
-#         # Modify the foto_del_carrusel URL to include only the desired part
-#         url_parts = data["foto_del_carrusel"].split("/")
-#         carrousel_part = "/".join(url_parts[-2:])
-#         data["foto_del_carrusel"] = carrousel_part
+        # Modify the foto_del_carrusel URL to include only the desired part
+        url_parts = data["foto_del_carrusel"].split("/")
+        carrousel_part = "/".join(url_parts[-2:])
+        data["foto_del_carrusel"] = carrousel_part
 
-#         return data
+        return data

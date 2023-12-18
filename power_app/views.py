@@ -238,18 +238,18 @@ def rutina(request, dni, sesion):
                 {"not found": f"No tiene rutina cargada el usuario"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-# @api_view(["GET"])
-# def carrousel(request):
-#     if request.method == "GET":
-#         try:
-#             pics = FotosGimnasio.objects.all().order_by('orden')
-#             serializer = CarrouselSerializer(pics, many=True)
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         except FotosGimnasio.DoesNotExist:
-#             return Response(
-#                 {"not found": f"No hay fotos para mostrar"},
-#                 status=status.HTTP_400_BAD_REQUEST,
-#             )
+@api_view(["GET"])
+def carrousel(request):
+    if request.method == "GET":
+        try:
+            pics = FotosGimnasio.objects.all().order_by('orden')
+            serializer = CarrouselSerializer(pics, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except FotosGimnasio.DoesNotExist:
+            return Response(
+                {"not found": f"No hay fotos para mostrar"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 # TODO ver mecanismos de seguridad 
