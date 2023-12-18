@@ -216,7 +216,7 @@ STATIC_URL = "/assets/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-DEBUG=True
+# DEBUG=True
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True 
     ALLOWED_HOSTS = ["*", "power-gym.com.ar", "www.power-gym.com.ar", "149.50.130.158"]
