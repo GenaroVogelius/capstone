@@ -253,7 +253,8 @@ def rutina(request, dni, sesion):
 
 
 # TODO ver mecanismos de seguridad 
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
+        # si le pones la autenticación le tenes que mandar en el post del front la autenticacoón
 class ViewPDF(View):
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)

@@ -13,16 +13,18 @@ import Vencimiento from "../../components/Vencimiento/Vencimiento";
 
 function SoySocio() {
   useScrollToTop();
-  const { getUserInfo, userInfo, user, sesionesCount } =
+  const { getUserInfo, userInfo, sesionesCount } =
     useContext(DatosDeContexto);
 
-  const rutinaHeading = !sesionesCount ? (
+  const hasRoutine = !sesionesCount ? (
     <HorizontalLoading />
   ) : sesionesCount.sesiones.length > 0 ? (
-    "tu rutina"
+    true
   ) : (
-    "no tiene rutinas cargadas"
+    false
   );
+
+  console.log(hasRoutine);
 
   useEffect(() => {
     if (userInfo) {
@@ -80,15 +82,11 @@ function SoySocio() {
           />
         </div>
         {/* <RutinaHeading text={rutinaHeading} /> */}
-        <AccordionCustom prop={<Rutina />} />
-        {sesionesCount ? (
-          <>
-            <NewRutinaBtn />
-            <PdfBtn />
-          </>
-        ) : (
-          ""
-        )}
+        {hasRoutine &&
+          <AccordionCustom prop={<Rutina />} />}
+        {hasRoutine || <RutinaHeading text={"No tienes sesiones cargadas"} />}
+        <NewRutinaBtn />
+        {hasRoutine && <PdfBtn />}
       </div>
     </>
   );

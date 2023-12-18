@@ -86,7 +86,7 @@ function AccordionCustom() {
                   className={`accordion-title accordionTitle js-accordionTrigger ${
                     ariaExpandedStates[index] ? "is-expanded" : "is-collapsed"
                   }`}
-                  onClick={() => toggleAccordion(index)}
+                  onClick={sesionesCount && (() => toggleAccordion(index))}
                 >
                   {sesionesCount ? `Sesión ${index + 1}` : "cargando..."}
                 </a>

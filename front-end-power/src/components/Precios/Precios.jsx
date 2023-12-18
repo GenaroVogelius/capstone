@@ -6,20 +6,25 @@ import Skeleton from "react-loading-skeleton";
 import SpecialOffer from "./SpecialOffer.jsx";
 import { StyledPrecios } from "./StyledPrecios";
 
-function Precios({
-  promociones,
-  isPrecioScroller,
-  setIsPrecioScroller,
-  completed,
-}) {
+function Precios({ promociones, completed }) {
   // Ref for our element
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-  console.log(completed);
-  const timeline = gsap.timeline();
-  const sectionRefs = promociones.map(() => useRef(null));
-  const titlesRefs = promociones.map(() => useRef(null));
 
-  const [hasUserScrolledDown, setHasUserScrolledDown] = useState(false);
+  const numberOfElements = 3;
+  // const sectionRefs = Array.from({ length: numberOfElements }, () => useRef());
+  // const sectionRefs = promociones.some((element) => element !== 0)
+  //   ? promociones.map(() => useRef())
+  //   : Array.from({ length: numberOfElements }, () => useRef());
+
+  // TODO tenes que buscar una forma de que no te coincida el numero de arrays de promos y el de las promos en si no sea un problema
+  
+  const sectionRefs = promociones.map(() => useRef());
+
+
+
+  console.log(promociones);
+  console.log(sectionRefs);
+  // const sectionRefs = useRef([React.createRef(), React.createRef()]);
 
   useEffect(() => {
     // Array to store references to ScrollTriggers
@@ -27,7 +32,6 @@ function Precios({
 
     if (
       typeof ScrollTrigger !== "undefined" &&
-      promociones.some((element) => element !== 0) &&
       completed
     ) {
       // Clear previous ScrollTriggers
@@ -42,58 +46,6 @@ function Precios({
             onToggle: ({ isActive }) => {
               if (isActive) {
                 ref.current.classList.add("active");
-
-                // gsap.to(titlesRefs[index].current, {
-                //   scrollTrigger: {
-                //     trigger: ref.current,
-                //     start: "top-=20 top+=150",
-                //     markers: true,
-                //     once: true,
-                //   },
-                //   y: 0,
-                //   opacity: 1,
-                //   ease: "power4.out",
-                // });
-
-                gsap.fromTo(
-                  titlesRefs[index].current,
-                  {
-                    xPercent: 45,
-                    scale: 0.5,
-                    opacity: 0,
-                    rotation: 45,
-                  },
-                  {
-                    duration: 3,
-                    xPercent: 0,
-                    zIndex: 0,
-                    opacity: 1,
-                    scale: 1,
-                    ease: "power3.out",
-                    rotation: 0,
-                  }
-                );
-
-                //     gsap.fromTo(
-                //       titlesRefs[0].current, // Target element
-                //       {
-                //         opacity: 0, // Initial opacity
-                //         scale: 0,
-                //         rotateX:45,
-                //         x: 10,// Initial scale
-                //         y: 115
-                //       },
-                //       {
-                //         rotate:45,
-                // stagger: 0.05,
-                // delay: 0.2,
-                // duration: 5,
-                //         opacity: 1, // Final opacity
-                //         scale: 2, // Final scale
-                //          // Animation duration in seconds
-                //         ease: "power2.out", // Easing function
-                //       }
-                //     );
               } else {
                 ref.current.classList.remove("active");
               }
@@ -104,8 +56,6 @@ function Precios({
         // Store the ScrollTrigger reference in the array
         scrollTriggers.push(trigger);
       });
-
-      setIsPrecioScroller(true);
     }
 
     // Cleanup when the component unmounts or when new triggers are added
@@ -120,7 +70,7 @@ function Precios({
         <section>
           <div className="container">
             <div className="row justify-content-center">
-              {promociones.map((promo, index) => (
+              {promociones && promociones.map((promo, index) => (
                 <div key={index} className="col-lg-4 pt-3">
                   {promo.promociones_especiales &&
                   promo.promociones_especiales.length >= 1 ? (

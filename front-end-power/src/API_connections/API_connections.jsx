@@ -92,7 +92,7 @@ export async function getRutinaAPI(dni, sesion) {
 export async function getSesionesAPI(dni) {
   try {
     const response = await axios.get(`${baseURL}sesiones/${dni}`);
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     return { data: response.data };
   } catch (error) {

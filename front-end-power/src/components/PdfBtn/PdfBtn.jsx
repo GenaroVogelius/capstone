@@ -16,7 +16,7 @@ function PdfBtn() {
 
 
   const handleClick = () => {
-      window.open("http://127.0.0.1:8000/pdf_view/1", "_blank");
+      window.open(`${baseURL}/pdf_view/${dni}`, "_blank");
     };
 
   
@@ -25,7 +25,7 @@ function PdfBtn() {
     <StyledNewRutinaBtn>
       <div className="d-flex justify-content-center">
         <button className="request-rutina-btn" onClick={handleClick}>
-          <i class="far fa-file-pdf"></i> Ver en PDF
+          <i className="far fa-file-pdf"></i> Ver en PDF
         </button>
       </div>
     </StyledNewRutinaBtn>

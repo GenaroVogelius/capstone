@@ -92,24 +92,24 @@ class UsuarioAdmin(admin.ModelAdmin):
     update_activo.short_description = "Update Activo"
 
     # the changelist_view method checks the last execution date stored in the cache (update_activo_last_execution_date). If it is different from the current date, the update_activo function is called for each object in the queryset, and the activo field is updated accordingly. After the execution, the current date is stored in the cache as the last execution date.
-    # def changelist_view(self, request, extra_context=None):
-    #     last_execution_date = cache.get("update_activo_last_execution_date")
-    #     current_date = timezone.now().date()
+    def changelist_view(self, request, extra_context=None):
+        last_execution_date = cache.get("update_activo_last_execution_date")
+        current_date = timezone.now().date()
 
-    #     if last_execution_date != current_date:
-    #         queryset = self.get_queryset(request)
-    #         for obj in queryset:
-    #             self.update_activo(obj)
+        if last_execution_date != current_date:
+            queryset = self.get_queryset(request)
+            for obj in queryset:
+                self.update_activo(obj)
 
-    #         cache.set("update_activo_last_execution_date", current_date)
+            cache.set("update_activo_last_execution_date", current_date)
 
-    #     return super().changelist_view(request, extra_context=extra_context)
+        return super().changelist_view(request, extra_context=extra_context)
 
-    # def get_urls(self):
-    #     urls = super().get_urls()
-    #     # lo que haces aca es crear este path y que cuando se lo llame se ejecute la función upload
-    #     new_urls = [path("upload-excel/", upload_excel), path("graphics/", graphics)]
-    #     return new_urls + urls
+    def get_urls(self):
+        urls = super().get_urls()
+        # lo que haces aca es crear este path y que cuando se lo llame se ejecute la función upload
+        new_urls = [path("upload-excel/", upload_excel), path("graphics/", graphics)]
+        return new_urls + urls
 
 
 class AsistenciaAdmin(admin.ModelAdmin):

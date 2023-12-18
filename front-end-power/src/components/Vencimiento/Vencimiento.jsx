@@ -6,7 +6,6 @@ function Vencimiento({ daysDiff, formattedDateString, cuotaState }) {
   const dias = daysDiff;
   const percent = dias < 0 ? (-dias / 40) * 100 : (dias / 40) * 100;
   
-  console.log(dias)
   return (
     <StyledVencimiento>
       <Card>
