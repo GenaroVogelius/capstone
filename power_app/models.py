@@ -20,11 +20,9 @@ class UserManager(models.Manager):
             )
     def modify_existing_user(self,existing_user, DNI, hashed_password, **extra_fields):
             if existing_user.username != str(DNI):
-                print("el dni cambio")
                 existing_user.username = str(DNI)
                 existing_user.save()
             if existing_user.password != hashed_password:
-                print("la contraseña se cambio")
                 existing_user.password = hashed_password
                 existing_user.save()
             
@@ -109,12 +107,10 @@ class Usuario(models.Model):
 
         # la contraseña hasheada la tuvimos que escribir entre los condicionales, sino cada vez que se acccedia desde el panel de admin a los la lista de usuarios se daba un trigger de la función y se hasheaba contraseñas con hash.
         if not existing_user:
-            print("no es un usuario existente")
             hashed_password = make_password(self.password)
             self.password = hashed_password
             UserManager().create_user(self.DNI, hashed_password)
         elif existing_user.password != self.password or existing_user.username != str(self.DNI):
-            print("es un usuario existente")
             hashed_password = make_password(self.password)
             self.password = hashed_password
             UserManager().modify_existing_user(existing_user, self.DNI, self.password)
