@@ -232,8 +232,8 @@ class RutinaFormulario(models.Model):
 
 class Detalle_de_ejercicio(models.Model):
     ejercicio = models.CharField(max_length=200)
-    gif = CloudinaryField('image', 
-    folder='power-gym-gif', 
+    gif_imagen = CloudinaryField('image', 
+    folder='power-gym-ejercicios', 
     overwrite=True, 
     blank=True,
     null=True,)
