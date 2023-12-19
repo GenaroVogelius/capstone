@@ -225,7 +225,7 @@ if DEBUG:
 
 if not DEBUG:
     # !BORRAR ESTO DE ALLOWED HOSTS Y STATIC FILES
-    ALLOWED_HOSTS = ["power-gym.com.ar", "www.power-gym.com.ar", "149.50.130.158"]
+    # ALLOWED_HOSTS = ["power-gym.com.ar", "www.power-gym.com.ar", "149.50.130.158"]
     # ALLOWED_HOSTS.append("*")
     CORS_ALLOWED_ORIGINS = [os.environ.get('HTTPS')]
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
