@@ -163,8 +163,6 @@ export function ContextProvider(props) {
     }
   };
 
-  // console.log(listadoDeRutinas)
-  // console.log(dictDeRutinas ? dictDeRutinas[1] : "")
 
   const getSesiones = async () => {
     setLoading(true);
@@ -177,27 +175,7 @@ export function ContextProvider(props) {
     }
   };
 
-  //   function makeApiRequest() {
-  //   async function promise() {
-  //     const data = await requestNewRutina();
-  //     setBtnState((prev) => ({
-  //       ...prev,
-  //       text: "Has solicitado una rutina",
-  //       loading: false,
-  //       requestSuccessful: true,
-  //     }));
-  //     return data;
-  //   }
 
-  //   toast.promise(promise, {
-  //     loading: "Solicitando nueva rutina...",
-  //     success: (data) => {
-  //       return `${data.message}`;
-  //     },
-  //     error: "Error",
-  //   });
-
-  // }
   const requestNewRutina = async () => {
     try {
       const { message } = await requestNewRutinaAPI(user.DNI, authTokens);

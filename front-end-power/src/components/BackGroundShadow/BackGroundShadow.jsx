@@ -1,8 +1,8 @@
 import { StyledBackGroundShadow } from "./StyledBackGroudShadow";
 
-function BackGroundShadow({ children }) {
+function BackGroundShadow({ backgroundColor, children }) {
   return (
-    <StyledBackGroundShadow>
+    <StyledBackGroundShadow backgroundColor={backgroundColor}>
       <div className="shadow">{children}</div>
     </StyledBackGroundShadow>
   );

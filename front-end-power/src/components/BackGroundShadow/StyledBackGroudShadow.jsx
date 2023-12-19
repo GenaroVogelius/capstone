@@ -16,7 +16,9 @@ export const StyledBackGroundShadow = styled.div`
     height: 100%;
     left: 0;
     top: 0;
-    background: rgb(36 35 35 / 93%);
+    /* background: rgb(36 35 35 / 93%); */
+    background: ${(props) =>
+      props.backgroundColor ? props.backgroundColor : "rgb(36 35 35 / 93%)"};
     z-index: 10;
   }
 `;

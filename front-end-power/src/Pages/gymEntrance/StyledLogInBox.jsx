@@ -17,12 +17,22 @@ export const StyledLogInBox = styled.div`
   border-radius: 10px;
   background: ${primaryColor};
   overflow: hidden;
+  z-index: 20;
 
   h2 {
-    font-size: 3rem;
+    font-size: 4rem;
     margin: 0 0 30px;
     padding: 0;
     color: ${secondaryColor};
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  h3 {
+    font-size: 3rem;
+    margin: 0 0 30px;
+    padding: 0;
+    color: ${fourthColor};
     text-align: center;
   }
 
@@ -31,7 +41,7 @@ export const StyledLogInBox = styled.div`
     padding: 0;
     color: ${secondaryColor};
     text-align: center;
-    font-size: 4rem;
+    font-size: 5rem;
   }
 
   span {
@@ -104,15 +114,6 @@ export const StyledLogInBox = styled.div`
       text-transform: uppercase;
       margin-bottom: 2rem;
     }
-
-    /* input:focus ~ label,
-    input:valid ~ label {
-      // !donde esta esto
-      top: -20px;
-      left: 0;
-      color: #03e9f4;
-      font-size: 12px;
-    } */
   }
 
   @keyframes btn-anim1 {

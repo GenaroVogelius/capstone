@@ -219,12 +219,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # DEBUG=True
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True 
-    ALLOWED_HOSTS = ["*", "power-gym.com.ar", "www.power-gym.com.ar", "149.50.130.158"]
+    ALLOWED_HOSTS = [
+    "*"  # Adjust with the origin of your frontend
+]
 
 if not DEBUG:
     # !BORRAR ESTO DE ALLOWED HOSTS Y STATIC FILES
     ALLOWED_HOSTS = ["power-gym.com.ar", "www.power-gym.com.ar", "149.50.130.158"]
-    ALLOWED_HOSTS.append("*")
+    # ALLOWED_HOSTS.append("*")
     CORS_ALLOWED_ORIGINS = [os.environ.get('HTTPS')]
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     

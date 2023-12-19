@@ -13,11 +13,13 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
     path('promos', TemplateView.as_view(template_name='index.html')),
     path('soySocio', TemplateView.as_view(template_name='index.html')),
+    path('entrada', TemplateView.as_view(template_name='index.html')),
     
     # path('get_users/', views.get_users),
 
     # API rest
     path('usuario/<int:dni>', views.usuario, name="usuario"),
+    path('admin_usuario/<int:dni>', views.admin_usuario, name="admin_usuario"),
     path('tarifas/', views.tarifas, name="tarifas"),
     path('rutina/<int:dni>/<int:sesion>', views.rutina, name="rutina"),
     path('sesiones/<int:dni>', views.sesiones, name="sesiones"),

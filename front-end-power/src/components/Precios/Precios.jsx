@@ -7,24 +7,10 @@ import SpecialOffer from "./SpecialOffer.jsx";
 import { StyledPrecios } from "./StyledPrecios";
 
 function Precios({ promociones, completed }) {
-  // Ref for our element
   gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-  const numberOfElements = 3;
-  // const sectionRefs = Array.from({ length: numberOfElements }, () => useRef());
-  // const sectionRefs = promociones.some((element) => element !== 0)
-  //   ? promociones.map(() => useRef())
-  //   : Array.from({ length: numberOfElements }, () => useRef());
-
-  // TODO tenes que buscar una forma de que no te coincida el numero de arrays de promos y el de las promos en si no sea un problema
-  
   const sectionRefs = promociones.map(() => useRef());
 
-
-
-  console.log(promociones);
-  console.log(sectionRefs);
-  // const sectionRefs = useRef([React.createRef(), React.createRef()]);
 
   useEffect(() => {
     // Array to store references to ScrollTriggers

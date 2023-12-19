@@ -15,6 +15,7 @@ function SoySocio() {
   useScrollToTop();
   const { getUserInfo, userInfo, sesionesCount } =
     useContext(DatosDeContexto);
+  
 
   const hasRoutine = !sesionesCount ? (
     <HorizontalLoading />
@@ -24,7 +25,6 @@ function SoySocio() {
     false
   );
 
-  console.log(hasRoutine);
 
   useEffect(() => {
     if (userInfo) {

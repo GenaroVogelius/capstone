@@ -22,7 +22,7 @@ function Rutina({
     ? rutinaDeSesion[currentPage]
     : "";
 
-  let card = useRef(null);
+  const [card, setCard] = useState(null);
 
   const animation = (XPercent, rotation) => {
     gsap.fromTo(
@@ -62,7 +62,7 @@ function Rutina({
   // ! POR QUE LO TENES QUE RENDERIZAR DIFERENTE EN DETALLES DE EJERCICIO
   return (
     <StyledRutina>
-      <div className="card" ref={(element) => (card = element)}>
+      <div className="card" ref={(element) => setCard(element)}>
         <p className="title">
           Ejercicio {currentPage + 1} / {contentToPagination}
         </p>
