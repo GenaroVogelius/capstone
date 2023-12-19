@@ -12,7 +12,7 @@ function Footer() {
                   <div className="cta-text">
                     <h4 className="mt-2">Seguinos</h4>
                     <a
-                      href="https://www.instagram.com/gena_vogelius/?next=%2F"
+                      href="https://www.instagram.com/powergimnasio/"
                       target="_blank"
                     >
                       <i
@@ -20,7 +20,6 @@ function Footer() {
                         aria-hidden="true"
                       ></i>
                     </a>
-                    {/* <span>Urquiza 1383 Planta Alta, Rosario</span> */}
                   </div>
                 </div>
               </div>
@@ -106,7 +105,10 @@ function Footer() {
                 <div className="copyright-text">
                   <p>
                     Copyright &copy; 2023, All Right Reserved{" "}
-                    <a href="https://www.linkedin.com/in/genaro-vogelius-3a9332142/">
+                    <a
+                      href="https://www.linkedin.com/in/genaro-vogelius-3a9332142/"
+                      target="_blank"
+                    >
                       Desarrollador Genaro Vogelius
                     </a>
                   </p>

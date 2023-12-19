@@ -27,6 +27,7 @@ class PromocionEspecialInline(admin.TabularInline):
 
 class PowerAdminArea(admin.AdminSite):
     site_header = "Power Gym Administración"
+    site_url = "/entrada"
 
 
 power_site = PowerAdminArea(name="powerAdmin")

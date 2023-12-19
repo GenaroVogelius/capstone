@@ -38,7 +38,6 @@ function Links({ setShow }) {
         <StyledLink
           to="/promos"
           // no podes poner setShow(false) ni handCloase(false) porque se reinicia toda la pagina.
-          onClick={() => console.log("click")}
           className={currentPath === "/promos" ? "active" : ""}
           disabled={currentPath === "/promos"}
           style={{ cursor: currentPath === "/promos" ? "auto" : "pointer" }}

@@ -10,7 +10,7 @@ from .models import *
 class UsuarioSerializer(serializers.ModelSerializer):
 
     days_to_vencimiento = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Usuario
         fields = ('nombre', 'activo', 'sexo', 'vencimiento','solicitud_nueva_rutina', 'days_to_vencimiento',)
@@ -35,10 +35,11 @@ class EjercicioSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
 
-        # Modify the foto_del_carrusel URL to include only the desired part
-        url_parts = data["gif"].split("/")
-        gif_part = "/".join(url_parts[-2:])
-        data["gif"] = gif_part
+        # Modify the foto_del_carrusel URL to include only the desired part if there is a gif
+        if data["gif"] != None:
+            url_parts = data["gif"].split("/")
+            gif_part = "/".join(url_parts[-2:])
+            data["gif"] = gif_part
 
         return data
         

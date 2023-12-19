@@ -1,25 +1,20 @@
 # Create your views here.
 from io import BytesIO
 from pathlib import Path
-
 import pandas
 from django.conf import settings
 from django.contrib import messages
-from django.db.models import Count
-from django.http import (HttpResponse, HttpResponseForbidden,
-                         HttpResponseRedirect)
-from django.shortcuts import get_object_or_404, render
+from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseForbidden)
+from django.shortcuts import render
 from django.template.loader import get_template
 from django.urls import reverse
 from django.views import View
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import (IsAdminUser, IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+from rest_framework.permissions import (IsAuthenticated,)
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from xhtml2pdf import pisa
-
 from .models import *
 from .serializers import *
 from .utils import GraphicsDataGenerator
@@ -30,6 +25,35 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+@api_view(["GET", "POST"])
+def admin_usuario(request, dni):
+    if request.get_host() not in settings.ALLOWED_HOSTS:
+        return Response(
+            {"error": "Permission denied"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    if request.method == "GET":
+        try:
+            usuario = Usuario.objects.get(DNI=dni)
+            serializer = UsuarioSerializer(usuario, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Usuario.DoesNotExist:
+            return Response(
+                {"not_found": f"Usuario with DNI {dni} does not exist"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+    elif request.method == "POST":
+        try:
+            user = Usuario.objects.get(DNI=dni)
+            Asistencia.objects.create(usuario=user)
+            return Response({"message": "asistencia tomada"}, status=status.HTTP_200_OK)
+        except Usuario.DoesNotExist:
+            return Response(
+                {"not found": f"Usuario with DNI {dni} does not exist"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 
@@ -37,10 +61,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def usuario(request, dni):
-    # TODO activar esto
-    # if request.get_host() not in settings.ALLOWED_HOSTS:
-    #     return HttpResponseForbidden("Access denied")
-
     if request.method == "GET":
         try:
             usuario = Usuario.objects.get(DNI=dni)
@@ -51,22 +71,6 @@ def usuario(request, dni):
                 {"not found": f"Usuario with DNI {dni} does not exist"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-
-    elif request.method == "POST" and request.user.is_staff:
-        try:
-            user = Usuario.objects.get(DNI=dni)
-            Asistencia.objects.create(usuario=user)
-            return Response({"message": "asistencia tomada"}, status=status.HTTP_200_OK)
-        except Usuario.DoesNotExist:
-            return Response(
-                {"not found": f"Usuario with DNI {dni} does not exist"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-    else:
-        return Response(
-            {"error": "Permission denied"},
-            status=status.HTTP_403_FORBIDDEN,
-        )
 
 
 def upload_excel(request):
@@ -294,8 +298,8 @@ class ViewPDF(View):
 
     def get(self, request, dni, *args, **kwargs):
         # cambias esto de autenticación
-        # if request.get_host() not in settings.ALLOWED_HOSTS:
-        #     return HttpResponseForbidden("Access denied")
+        if request.get_host() not in settings.ALLOWED_HOSTS:
+            return HttpResponseForbidden("Access denied")
         data = self.get_info(dni)
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')

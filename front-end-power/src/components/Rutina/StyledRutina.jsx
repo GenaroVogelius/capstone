@@ -13,10 +13,9 @@ export const StyledRutina = styled.div`
     font-weight: 400;
     line-height: 20px;
     color: #fff;
-    background: #151414;
     border-bottom: 3px solid #ff5e14;
     font-weight: 100;
-    /* background: radial-gradient(#151414, #4e4e4e); */
+    background: radial-gradient(${primaryColor}, #312727); 
     font-weight: 500;
   }
 
@@ -215,28 +214,6 @@ export const StyledRutina = styled.div`
     border-radius: 4px 20px 20px 4px;
   }
 
-  /* .btn {
-    align-items: center;
-    border: 0;
-    border-radius: 8px;
-    box-sizing: border-box;
-    color: ${fourthColor};
-    display: flex;
-    font-family: Phantomsans, sans-serif;
-    font-size: 18px;
-    justify-content: center;
-    line-height: 1em;
-    max-width: 100%;
-    min-width: 140px;
-    padding: 3px;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.3s;
-  } */
 
   .btn-exercise:active,
   :hover {

@@ -1,35 +1,22 @@
+import { useContext } from "react";
+import { DatosDeContexto } from "../../Context/Context";
 
-
-function EntranceForm({ setUserData, setNotFound, setIsLoading }) {
-
-  // const URL = "https://vps-3503468-x.dattaweb.com/";
-
-  // URL FOR DEVELOP
-  // const URL = "http://localhost:8000/"
-  // const URL = import.meta.env.VITE_URL;
-
-  // console.log(URL);
-
-  // // "https://vps-3503468-x.dattaweb.com/";
+function EntranceForm({ setUserData, setIsLoading }) {
+  const { baseURL } = useContext(DatosDeContexto);
 
   function handleSubmit(event) {
     setIsLoading(true);
     event.preventDefault();
     // ? como le pusiste un name al input asi lo podes llamar despues del .target
     let input = event.target.input_dni;
-    let inputValue = event.target.input_dni.value;
+    let dniValue = event.target.input_dni.value;
     const getUserState = async () => {
       try {
-        const response = await fetch(`${URL}usuario/${inputValue}`);
+        const response = await fetch(`${baseURL}admin_usuario/${dniValue}`);
         const data = await response.json();
         setIsLoading(false);
+        setUserData(data);
 
-        if ("not found" in data) {
-          setNotFound(true);
-        } else {
-          setUserData(data);
-          // inputValue = "" no te funciona por eso hiciste la variable input
-        }
         input.value = "";
       } catch (error) {
         console.log("Error:", error.message);
@@ -37,7 +24,7 @@ function EntranceForm({ setUserData, setNotFound, setIsLoading }) {
     };
     getUserState();
 
-    fetch(`${URL}usuario/${inputValue}`, {
+    fetch(`${baseURL}admin_usuario/${dniValue}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

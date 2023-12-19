@@ -71,6 +71,11 @@ function AccordionCustom() {
     setAriaExpandedStates(newAriaStates);
 
     handleClickedAccordion(index);
+
+     const expandedElement = document.getElementById(
+       `accordion${sesionesCards[index]}`
+    );
+    
   };
 
   return (
