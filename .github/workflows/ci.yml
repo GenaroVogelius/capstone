@@ -5,9 +5,22 @@ jobs:
     test_project:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v4
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Cache dependencies
+          uses: actions/cache@v2
+          with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            restore-keys: |
+                ${{ runner.os }}-pip-
+        - name: Install dependencies
+          run: |
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            python manage.py test
+
         - name: Run Django unit tests
           run: |
-            pip3 install --user django
-            pip install -r requirements.txt
             python manage.py test
