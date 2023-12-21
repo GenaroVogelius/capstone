@@ -16,6 +16,12 @@ jobs:
             restore-keys: |
                 ${{ runner.os }}-pip-
 
+        - name: Set up environment variables
+          run: |
+            echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+            env | grep SECRET_KEY
+            python -c "import os; print(os.environ)"
+
         
         - name: Install dependencies
           run: |
