@@ -16,12 +16,7 @@ jobs:
             restore-keys: |
                 ${{ runner.os }}-pip-
 
-        - name: Set up environment variables
-          run: |
-            echo "CLOUD_NAME=${{ secrets.CLOUD_NAME }}" >> $GITHUB_ENV
-            echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
-            echo "API_SECRET=${{ secrets.API_SECRET }}" >> $GITHUB_ENV
-            echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+        
         - name: Install dependencies
           run: |
             pip install --upgrade pip
