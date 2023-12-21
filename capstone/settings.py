@@ -216,12 +216,10 @@ STATIC_URL = "/assets/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DEBUG=True
+
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True 
-    ALLOWED_HOSTS = [
-    "*"  # Adjust with the origin of your frontend
-]
+    ALLOWED_HOSTS = ["*"]
 
 if not DEBUG:
     # !BORRAR ESTO DE ALLOWED HOSTS Y STATIC FILES

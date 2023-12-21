@@ -24,15 +24,15 @@ urlpatterns = [
     path('rutina/<int:dni>/<int:sesion>', views.rutina, name="rutina"),
     path('sesiones/<int:dni>', views.sesiones, name="sesiones"),
     path('servicios/', views.servicios, name="servicios"),
-    path('requestRutine/', views.request_rutine, name="request_rutine"),
-    path('carrousel/', views.carrousel, name="carrousel_photos"),
+    path('requestRutine/', views.request_rutine, name="requestRutine"),
+    path('carrousel/', views.carrousel, name="carrousel"),
 
     path('pdf_view/<int:dni>', views.ViewPDF.as_view(), name="pdf_view"),
+    path('upload_excel/', views.upload_excel, name="upload_excel"),
+
 
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
-
 
     
 ]
