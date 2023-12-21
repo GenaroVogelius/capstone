@@ -28,4 +28,4 @@ urlpatterns = [
 ]
 
 
-power_site.index_title = "Administración del Power Gym"
+

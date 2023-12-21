@@ -1,24 +1,26 @@
 # Create your views here.
 from io import BytesIO
 from pathlib import Path
+
 import pandas
 from django.conf import settings
 from django.contrib import messages
-from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseForbidden)
+from django.http import (HttpResponse, HttpResponseForbidden,
+                         HttpResponseRedirect)
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.urls import reverse
 from django.views import View
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import (IsAuthenticated,)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from xhtml2pdf import pisa
+
 from .models import *
 from .serializers import *
 from .utils import GraphicsDataGenerator
-
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -57,7 +59,6 @@ def admin_usuario(request, dni):
 
 
 
-
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def usuario(request, dni):
@@ -72,7 +73,7 @@ def usuario(request, dni):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-
+# TODO TEST
 def upload_excel(request):
     if request.method == "POST":
         excel_file = request.FILES["excel_upload"]
@@ -99,7 +100,7 @@ def upload_excel(request):
 
         return HttpResponseRedirect(reverse("admin:index"))
 
-
+# TODO TEST
 def graphics(request):
     data_generator = GraphicsDataGenerator()
     data = data_generator.generate_graphics_data()
@@ -121,66 +122,23 @@ def request_rutine(request):
             return Response({"message": "Se ha solicitado exitosamente la rutina"}, status=status.HTTP_200_OK)
         except Usuario.DoesNotExist:
             return Response(
-                {"not found": f"Usuario with DNI {dni} does not exist"},
+                {"not_found": f"Usuario with DNI {dni} does not exist"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
 
-# no necesitas esto, se borra bien
-# def get_users(request):
-#     users = User.objects.all()
-#     usuarios = Usuario.objects.all()
-
-#     lista_de_usuarios_dni = []
-#     for usuario in usuarios:
-#         lista_de_usuarios_dni.append(int(usuario.DNI))
-
-#     print(lista_de_usuarios_dni)
-
-#     lista_de_users = []
-#     for user in users:
-#         print(user.username)
-#         try:
-#             if int(user.username) not in lista_de_usuarios_dni:
-#                 print("no esta")
-#                 # user.delete()
-#         except ValueError:
-#             pass
-
-#     print(users)
-
-# @api_view(["GET"])
-# def rutina(request, dni, sesion):
-#     if request.method == "GET":
-#         try:
-#             pagination_class = LimitOffsetPagination()
-#             rutinas = Rutina.objects.filter(Q(usuario__DNI=dni) & Q(sesion=sesion))
-#             rutinas = RutinaFormulario.objects.filter(rutina__in=rutinas)
-#             paginated_rutinas = pagination_class.paginate_queryset(rutinas, request, request.path_info)
-#             print(paginated_rutinas)
-#             print(rutinas)
-#             # serializer = RutinaSerializer(rutinas, many=True)
-#             serializer = RutinaSerializer(paginated_rutinas, many=True)
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         except RutinaFormulario.DoesNotExist:
-#             return Response(
-#                 {"not found": f"Usuario with DNI {dni} does not exist"},
-#                 status=status.HTTP_400_BAD_REQUEST,
-#             )
 
 @api_view(["GET"])
 def sesiones(request, dni):
     if request.method == "GET":
-        try:
-            sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
-            sesiones_list = list(sesiones_list)
-
-            return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
-        except RutinaFormulario.DoesNotExist:
+        sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
+        if not sesiones_list:
             return Response(
-                {"not found": f"No tienes ninguna sesion cargada"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            {"not found": f"No tienes ninguna sesion cargada"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+        sesiones_list = list(sesiones_list)
+        return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
 
     # if request.method == "GET":
 
@@ -205,12 +163,14 @@ def servicios(request):
     if request.method == "GET":
         try:
             servicios = Servicio.objects.all()
+            if not servicios:
+                raise Servicio.DoesNotExist
             serializer = ServicioSerializer(servicios, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Servicio.DoesNotExist:
             return Response(
-                {"not found": f"No se encontraron servicios"},
-                status=status.HTTP_400_BAD_REQUEST,
+                {"not_found": f"No se encontraron servicios"},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
 
@@ -219,11 +179,13 @@ def tarifas(request):
     if request.method == "GET":
         try:
             tarifas = Tarifa.objects.all()
+            if not tarifas:
+                raise Tarifa.DoesNotExist
             serializer = TarifaSerializer(tarifas, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Tarifa.DoesNotExist:
             return Response(
-                {"not found": f"bad request"},
+                {"not_found": f"bad request"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -235,30 +197,36 @@ def rutina(request, dni, sesion):
             rutinas = RutinaFormulario.objects.filter(
                 rutina__sesion=sesion, rutina__usuario__DNI=dni
             )
+            if not rutinas:
+                raise RutinaFormulario.DoesNotExist
+            
             serializer = RutinaSerializer(rutinas, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        
         except RutinaFormulario.DoesNotExist:
             return Response(
-                {"not found": f"No tiene rutina cargada el usuario"},
+                {"not_found": f"No tiene rutina cargada el usuario"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        
+
 @api_view(["GET"])
 def carrousel(request):
     if request.method == "GET":
         try:
             pics = FotosGimnasio.objects.all().order_by('orden')
+            if not pics:
+                raise FotosGimnasio.DoesNotExist
             serializer = CarrouselSerializer(pics, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except FotosGimnasio.DoesNotExist:
             return Response(
-                {"not found": f"No hay fotos para mostrar"},
+                {"not_found": f"No hay fotos para mostrar"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
 
-# TODO ver mecanismos de seguridad 
-# @permission_classes([IsAuthenticated])
-        # si le pones la autenticación le tenes que mandar en el post del front la autenticacoón
+# TODO TEST
 class ViewPDF(View):
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
