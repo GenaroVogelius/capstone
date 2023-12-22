@@ -134,8 +134,7 @@ def sesiones(request, dni):
         sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
         if not sesiones_list:
             return Response(
-            {"not found": f"No tienes ninguna sesion cargada"},
-            status=status.HTTP_400_BAD_REQUEST,
+            "mala response"
         )
         sesiones_list = list(sesiones_list)
         return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
