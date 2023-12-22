@@ -1,5 +1,8 @@
 name: Testing
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
     test_project:
@@ -28,4 +31,3 @@ jobs:
         - name: Run Django unit tests
           run: |
             python manage.py test
-
