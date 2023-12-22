@@ -19,10 +19,7 @@ jobs:
         - name: Set up environment variables
           run: |
             echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
-            echo "La clave secreta es: $SECRET_KEY"
             
-
-        
         - name: Install dependencies
           run: |
             pip install --upgrade pip

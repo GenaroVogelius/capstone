@@ -39,7 +39,7 @@ def admin_usuario(request, dni):
         try:
             usuario = Usuario.objects.get(DNI=dni)
             serializer = UsuarioSerializer(usuario, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response("probando mala response")
         except Usuario.DoesNotExist:
             return Response(
                 {"not_found": f"Usuario with DNI {dni} does not exist"},
