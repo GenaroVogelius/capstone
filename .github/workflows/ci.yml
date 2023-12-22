@@ -24,7 +24,6 @@ jobs:
           run: |
             pip install --upgrade pip
             pip install -r requirements.txt
-            python manage.py test
 
         - name: Run Django unit tests
           run: |
