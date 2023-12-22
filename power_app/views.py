@@ -221,7 +221,7 @@ def carrousel(request):
             return Response("no deberia pasar este test")
         except FotosGimnasio.DoesNotExist:
             return Response(
-                {"not_found": f"No hay fotos para mostrar"},
+                {"error"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
