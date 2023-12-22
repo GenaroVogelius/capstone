@@ -218,7 +218,7 @@ def carrousel(request):
             if not pics:
                 raise FotosGimnasio.DoesNotExist
             serializer = CarrouselSerializer(pics, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response("no deberia pasar este test")
         except FotosGimnasio.DoesNotExist:
             return Response(
                 {"not_found": f"No hay fotos para mostrar"},
