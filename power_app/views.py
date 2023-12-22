@@ -271,3 +271,6 @@ class ViewPDF(View):
         data = self.get_info(dni)
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
+
+
+#probandoooo
