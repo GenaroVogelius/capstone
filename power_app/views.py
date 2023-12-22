@@ -39,7 +39,7 @@ def admin_usuario(request, dni):
         try:
             usuario = Usuario.objects.get(DNI=dni)
             serializer = UsuarioSerializer(usuario, many=False)
-            return Response("probando mala response")
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Usuario.DoesNotExist:
             return Response(
                 {"not_found": f"Usuario with DNI {dni} does not exist"},
@@ -134,8 +134,7 @@ def sesiones(request, dni):
         sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
         if not sesiones_list:
             return Response(
-            {"not found": f"No tienes ninguna sesion cargada"},
-            status=status.HTTP_400_BAD_REQUEST,
+            "mala response"
         )
         sesiones_list = list(sesiones_list)
         return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
