@@ -221,7 +221,7 @@ def carrousel(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except FotosGimnasio.DoesNotExist:
             return Response(
-                {"not_found": f"No hay fotos para mostrar"},
+                {"error"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
