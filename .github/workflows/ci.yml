@@ -39,7 +39,6 @@ jobs:
         run: |
             echo "SECRET_KEY=${SECRET_KEY}"
 
-  
       - name: Run Django unit tests
         run: |
           python manage.py test
