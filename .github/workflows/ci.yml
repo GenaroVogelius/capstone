@@ -13,23 +13,18 @@ concurrency:
 
 jobs:
 
-
-  lint:
+  download_dependencies:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-  download_dependencies:
-    runs-on: ubuntu-latest
-    steps:
       - name: Set up environment variables
         env:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
 
             echo "SECRET_KEY=${SECRET_KEY}"
-
 
         # run: |
         #   echo "SECRET_KEY=${{secrets.SECRET_KEY}}" >> $GITHUB_ENV
