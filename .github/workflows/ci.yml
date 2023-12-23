@@ -37,6 +37,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m venv venv
+          . venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -44,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dependencies
-          path: ~/.cache/pip
+          path: venv
           if-no-files-found: error
   
   tests:
@@ -55,11 +57,24 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dependencies
-          path: ~/dependencies
+          path: venv
           if-no-files-found: error
+          
+      - name: Activate virtual environment
+        run: . venv/bin/activate
 
       - name: Checkout code
         uses: actions/checkout@v4
+
+
+      - name: Debug - List contents before copying
+        run: ls -al ~/dependencies        
+      - name: Copy dependencies to root
+        run: cp -r ~/dependencies/. ~/
+
+      - name: Debug - List contents after copying
+        run: ls -al ~/
+
 
       - name: Run Django unit tests
         run: |
