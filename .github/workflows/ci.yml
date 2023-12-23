@@ -50,7 +50,7 @@ jobs:
       #     path: ~/.cache/pip
   
   tests:
-    needs: [lint, download_dependencies]
+    needs: [download_dependencies]
     runs-on: ubuntu-latest
     steps:
       # - name: Download dependencies artifact
