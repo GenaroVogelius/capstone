@@ -273,4 +273,4 @@ class ViewPDF(View):
         return HttpResponse(pdf, content_type='application/pdf')
 
 
-#probando cambios en develop bienff
+#probando cambios en develop 
