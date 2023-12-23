@@ -63,6 +63,7 @@ jobs:
 
       - name: Run Django unit tests
         run: |
+          cd ~/.cache/pip 
           python manage.py test
           
 
