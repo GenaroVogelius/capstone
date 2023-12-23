@@ -69,7 +69,6 @@ jobs:
 
       - name: Run Django unit tests
         run: |
-          cp -r ~/dependencies/. ~/.
           python manage.py test
           
 
