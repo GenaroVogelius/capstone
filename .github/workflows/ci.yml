@@ -7,12 +7,27 @@ on:
       - develop
 
 jobs:
-  create_pull_request_and_test:
+
+  avoid_reduncy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: 'Cancel Previous Runs'
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: ${{github.token}}
+    
 
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+
+
+
+  download_dependencies:
+    runs-on: ubuntu-latest
+    steps:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -23,22 +38,42 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "SECRET_KEY=${{secrets.SECRET_KEY}}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Upload dependencies as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependencies
+          path: ~/.cache/pip
+  
+  tests:
+    needs: [lint, download_dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dependencies artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dependencies
+          path: ~/.cache/pip
+
       - name: Run Django unit tests
         run: |
           python manage.py test
           
+
+  pull_request_to_main_branch:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
       - name: Create Pull Request to main on success
-        if: github.event_name == 'push'
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.TOKEN_GITHUB }}
+          token: ${{ github.token }}
           commit-message: "Merge develop into main"
           title: "Merge develop into main"
           body: "This is an automated pull request to merge develop into main."
