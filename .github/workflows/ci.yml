@@ -67,15 +67,6 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Debug - List contents before copying
-        run: ls -al ~/dependencies        
-      - name: Copy dependencies to root
-        run: cp -r ~/dependencies/. ~/
-
-      - name: Debug - List contents after copying
-        run: ls -al ~/
-
-
       - name: Run Django unit tests
         run: |
           cp -r ~/dependencies/. ~/.
