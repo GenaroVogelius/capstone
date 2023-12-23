@@ -3,7 +3,8 @@ name: Testing
 on:
   push:
     branches:
-      - develop
+      # - develop
+      - main
 
 jobs:
 
@@ -41,21 +42,21 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Upload dependencies as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependencies
-          path: ~/.cache/pip
+      # - name: Upload dependencies as artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: dependencies
+      #     path: ~/.cache/pip
   
   tests:
     needs: [lint, download_dependencies]
     runs-on: ubuntu-latest
     steps:
-      - name: Download dependencies artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dependencies
-          path: ~/.cache/pip
+      # - name: Download dependencies artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: dependencies
+      #     path: ~/.cache/pip
 
       - name: Run Django unit tests
         run: |
