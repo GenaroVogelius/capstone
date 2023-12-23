@@ -33,6 +33,9 @@ jobs:
       - name: Run Django unit tests
         run: |
           python manage.py test
+          
+      - name: Configure Git credentials
+        run: echo "machine github.com login ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
 
       - name: Create Pull Request to main on success
         if: github.event_name == 'push'
