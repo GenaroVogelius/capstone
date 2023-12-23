@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dependencies
-          path: ~/.cache/pip
+          path: ~/dependencies
           if-no-files-found: error
 
       - name: Checkout code
@@ -63,7 +63,7 @@ jobs:
 
       - name: Run Django unit tests
         run: |
-          cd ~/.cache/pip 
+          cp -r ~/dependencies/. ~/.
           python manage.py test
           
 
