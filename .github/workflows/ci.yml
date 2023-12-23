@@ -3,8 +3,8 @@ name: Testing
 on:
   push:
     branches:
-      # - develop
-      - main
+      - develop
+      # - main
 
 
 concurrency:
