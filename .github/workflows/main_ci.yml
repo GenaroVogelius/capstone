@@ -19,5 +19,5 @@ jobs:
     - name: console steps
       run: |
         cd /home/vps-3503468-x.dattaweb.com/public_html/capstone
-        bash build.sh
+        ./build.sh
         
