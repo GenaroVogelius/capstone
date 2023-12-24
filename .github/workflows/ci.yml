@@ -50,6 +50,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: debugging
+        uses: git branch -a
+
+      - name: Check out main branch
+        run: git checkout main
+        
       - name: Merge into main if tests pass
         run: |
           git config user.name "${{ github.actor }}"
