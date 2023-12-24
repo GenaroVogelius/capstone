@@ -15,8 +15,5 @@ export const StyledRutinaHeading = styled.div`
   text-align: center;
   margin: auto;
   white-space: nowrap;
-  padding-bottom: 13px;
   color:${primaryColor}
-
- 
 `;

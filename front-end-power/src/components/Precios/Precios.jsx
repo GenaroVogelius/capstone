@@ -27,7 +27,7 @@ function Precios({ promociones, completed }) {
         const trigger = gsap.to(ref.current, {
           scrollTrigger: {
             trigger: ref.current,
-            start: "top-=50 top+=150",
+            start: "top-=110 top+=150",
             // markers: true,
             onToggle: ({ isActive }) => {
               if (isActive) {

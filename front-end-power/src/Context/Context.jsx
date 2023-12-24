@@ -170,6 +170,7 @@ export function ContextProvider(props) {
     setLoading(true);
     try {
       const { data } = await getSesionesAPI(user.DNI);
+      console.log(data)
       setSesionesCount(data);
     } catch (error) {
     } finally {

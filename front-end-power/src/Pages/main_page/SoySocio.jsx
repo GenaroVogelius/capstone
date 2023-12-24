@@ -81,10 +81,12 @@ function SoySocio() {
             formattedDateString={formattedDateString()}
           />
         </div>
-        {/* <RutinaHeading text={rutinaHeading} /> */}
-        {hasRoutine &&
-          <AccordionCustom prop={<Rutina />} />}
-        {hasRoutine || <RutinaHeading text={"No tienes sesiones cargadas"} />}
+        {hasRoutine ?
+          <>
+            <RutinaHeading text={"Tu rutina"} />
+            <AccordionCustom prop={<Rutina />} />
+          </>
+        : <RutinaHeading text={"No tienes sesiones cargadas"} />}
         <NewRutinaBtn />
         {hasRoutine && <PdfBtn />}
       </div>
