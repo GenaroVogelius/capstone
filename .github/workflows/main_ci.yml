@@ -16,5 +16,8 @@ jobs:
   updating_server:
     runs-on: self-hosted
     steps:
-    - name: Print Hola
-      run: echo "hola"
+    - name: console steps
+      run: |
+        cd /home/vps-3503468-x.dattaweb.com/public_html/capstone
+        source /home/vps-3503468-x.dattaweb.com/public_html/bin/activate
+        ls

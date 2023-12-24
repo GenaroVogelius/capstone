@@ -160,10 +160,10 @@ class SesionesViewTest(BaseSetUp):
         response = self.client.get(reverse("power_app:sesiones", args=[0]))
 
         # Check if the response status code is 400 BAD REQUEST
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Check if the response contains the expected error message
-        expected_error = {"not found": "No tienes ninguna sesion cargada"}
+        expected_error = {"sesiones": []}
         self.assertEqual(response.data, expected_error)
 
 class ServiciosViewTest(BaseSetUp):
@@ -316,5 +316,3 @@ class CarrouselViewTest(BaseSetUp):
         # Check if the response contains the expected error message
         expected_error = {"not_found": "No hay fotos para mostrar"}
         self.assertEqual(response.data, expected_error)
-
-

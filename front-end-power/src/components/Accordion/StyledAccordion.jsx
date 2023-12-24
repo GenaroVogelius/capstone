@@ -32,7 +32,7 @@ export const StyledAccordion = styled.div`
   .container {
     max-width: 960px;
     margin: 0 auto;
-    padding: 2em 0 2em 0;
+    padding: 0 0 2em 0;
   }
   .accordionTitle,
   .accordion__Heading {
