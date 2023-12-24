@@ -132,11 +132,7 @@ def request_rutine(request):
 def sesiones(request, dni):
     if request.method == "GET":
         sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
-        if not sesiones_list:
-            return Response(
-            {"not found": f"No tienes ninguna sesion cargada"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+
         sesiones_list = list(sesiones_list)
         return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
 
@@ -271,4 +267,3 @@ class ViewPDF(View):
         data = self.get_info(dni)
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
-

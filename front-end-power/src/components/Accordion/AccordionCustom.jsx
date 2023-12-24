@@ -22,6 +22,8 @@ function AccordionCustom() {
     ? sesionesCount.sesiones
     : defaultSesionesCount;
 
+  
+  console.log(sesionesCount);
   const initialAriaStates = new Array(sesionesCards).fill(false);
 
   const [ariaExpandedStates, setAriaExpandedStates] =
@@ -72,10 +74,6 @@ function AccordionCustom() {
 
     handleClickedAccordion(index);
 
-     const expandedElement = document.getElementById(
-       `accordion${sesionesCards[index]}`
-    );
-    
   };
 
   return (
