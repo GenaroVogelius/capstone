@@ -10,12 +10,9 @@ import {
 } from "../../StyleVariables/StyleVariables";
 
 export const StyledShowExercise = styled.div`
-
-
-
   .btn-danger {
-    border-radius: 10px 10px 0 0;
-    padding-bottom: 2px;
+    border-radius: 0 0 10px 10px;
+    padding: 4px 3.4rem 7px 3.4rem;
   }
 
   .image-card {
@@ -25,8 +22,4 @@ export const StyledShowExercise = styled.div`
     position: relative;
     background-size: cover;
   }
-
-
-
 `;
-
