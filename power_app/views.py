@@ -272,5 +272,3 @@ class ViewPDF(View):
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
-
-#probando cambios en develop333
