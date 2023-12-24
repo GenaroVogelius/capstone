@@ -221,8 +221,6 @@ def carrousel(request):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-
-# TODO TEST
 class ViewPDF(View):
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
