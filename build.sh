@@ -3,10 +3,11 @@ set -o errexit #This command sets the option errexit or e, which means that the 
 
 source /home/vps-3503468-x.dattaweb.com/public_html/bin/activate
 
-git stash
-git pull origin main
-git stash pop
 
+git pull origin main
+
+
+pip install --upgrade pip
 pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
