@@ -3,7 +3,7 @@ set -o errexit #This command sets the option errexit or e, which means that the 
 
 source /home/power-gym.com.ar/public_html/bin/activate
 
-git pull
+git pull origin main
 
 pip install -r requirements.txt
 
@@ -12,3 +12,5 @@ python manage.py collectstatic --no-input
 python manage.py makemigrations
 
 python manage.py migrate
+
+sudo systemctl restart lsws
