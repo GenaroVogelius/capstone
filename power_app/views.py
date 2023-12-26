@@ -21,6 +21,10 @@ from xhtml2pdf import pisa
 from .models import *
 from .serializers import *
 from .utils import GraphicsDataGenerator
+from rest_framework.views import APIView
+from rest_framework.throttling import UserRateThrottle
+from rest_framework.decorators import throttle_classes
+from django.views.decorators.http import etag
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -29,11 +33,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 @api_view(["GET", "POST"])
 def admin_usuario(request, dni):
-    if request.get_host() not in settings.ALLOWED_HOSTS:
-        return Response(
-            {"error": "Permission denied"},
-            status=status.HTTP_403_FORBIDDEN,
-        )
 
     if request.method == "GET":
         try:
@@ -61,6 +60,7 @@ def admin_usuario(request, dni):
 
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
+
 def usuario(request, dni):
     if request.method == "GET":
         try:
@@ -73,7 +73,6 @@ def usuario(request, dni):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-# TODO TEST
 def upload_excel(request):
     if request.method == "POST":
         excel_file = request.FILES["excel_upload"]
@@ -110,6 +109,7 @@ def graphics(request):
 # ? @staticmethod decorator is a good practice for methods that don't need access to instance attributes and are more like utility functions. It clarifies that these methods are not bound to instance-specific data and can be called on the class itself.
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+
 def request_rutine(request):
     if request.method == "POST":
         try:
@@ -129,6 +129,8 @@ def request_rutine(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
+
 def sesiones(request, dni):
     if request.method == "GET":
         sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
@@ -168,6 +170,7 @@ def servicios(request):
                 {"not_found": f"No se encontraron servicios"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+        
 
 
 @api_view(["GET"])
@@ -177,6 +180,8 @@ def tarifas(request):
             tarifas = Tarifa.objects.all()
             if not tarifas:
                 raise Tarifa.DoesNotExist
+
+                
             serializer = TarifaSerializer(tarifas, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Tarifa.DoesNotExist:
@@ -187,6 +192,7 @@ def tarifas(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def rutina(request, dni, sesion):
     if request.method == "GET":
         try:
@@ -221,7 +227,9 @@ def carrousel(request):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-class ViewPDF(View):
+
+class ViewPDF(APIView):
+    permission_classes = [IsAuthenticated]
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
         html  = template.render(context_dict)
@@ -249,7 +257,6 @@ class ViewPDF(View):
             dictionary = {sesion : form_rutinas}
             sesiones_and_form_de_rutinas.append(dictionary)
             
-
         return {
 	        "nombre": nombre,
 	        "apellido": apellido,
@@ -257,11 +264,7 @@ class ViewPDF(View):
             "STATIC_DIR": STATIC_DIR,
 	        }
 
-
     def get(self, request, dni, *args, **kwargs):
-        # cambias esto de autenticación
-        if request.get_host() not in settings.ALLOWED_HOSTS:
-            return HttpResponseForbidden("Access denied")
         data = self.get_info(dni)
         pdf = self.render_to_pdf('pdf_template.html', data)
         return HttpResponse(pdf, content_type='application/pdf')

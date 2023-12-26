@@ -14,6 +14,7 @@ import {
   logUserEntranceAPI,
   loginUserAPI,
   requestNewRutinaAPI,
+  viewPdfAPI,
 } from "../API_connections/API_connections";
 
 export const DatosDeContexto = createContext();
@@ -154,7 +155,7 @@ export function ContextProvider(props) {
   const getRutina = async (sesion) => {
     setLoading(true);
     try {
-      const { data } = await getRutinaAPI(user.DNI, sesion);
+      const { data } = await getRutinaAPI(user.DNI, sesion, authTokens);
       setDictDeRutinas((prevDict) => ({
         ...prevDict,
         [sesion]: data,
@@ -169,8 +170,7 @@ export function ContextProvider(props) {
   const getSesiones = async () => {
     setLoading(true);
     try {
-      const { data } = await getSesionesAPI(user.DNI);
-      console.log(data)
+      const { data } = await getSesionesAPI(user.DNI, authTokens);
       setSesionesCount(data);
     } catch (error) {
     } finally {
@@ -208,19 +208,13 @@ export function ContextProvider(props) {
     } finally {
     }
   };
-  // useEffect(() => {
-  //   if (!promos) {
-  //       getPromos();
-  //   }
-  // }, []);
-  // const isUserAuth = false
 
-  // useEffect(() => {
-  //   if (authTokens) {
-  //     setUser(jwt_decode(authTokens.access));
-  //   }
-  //   setLoading(false);
-  // }, [authTokens, loading]);
+  const viewPdf = async () => {
+
+      await viewPdfAPI(user.DNI, authTokens);
+
+  }
+
 
   return (
     <DatosDeContexto.Provider
@@ -253,6 +247,7 @@ export function ContextProvider(props) {
         getCarrouselPhotos,
         carrouselPhotos,
         logUserEntrance,
+        viewPdf,
       }}
     >
       {props.children}

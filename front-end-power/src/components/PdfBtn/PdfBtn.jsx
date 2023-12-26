@@ -11,12 +11,12 @@ import { useContext } from "react";
 import { DatosDeContexto } from "../../Context/Context";
 
 function PdfBtn() {
-  const { baseURL, user } = useContext(DatosDeContexto);
-  const dni = user ? user.DNI : ""
+  const { viewPdf } = useContext(DatosDeContexto);
+
 
 
   const handleClick = () => {
-      window.open(`${baseURL}/pdf_view/${dni}`, "_blank");
+      viewPdf()
     };
 
   
