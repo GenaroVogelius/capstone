@@ -6,9 +6,9 @@ import { toast } from "sonner";
 //   ? import.meta.env.DEVELOP_URL_ENV
 //   : import.meta.env.BUILD_URL_ENV;
 // export const baseURL ="http://127.0.0.1:8000/" 
-
+export const baseURL = "https://power-gym.com.ar/"
 // export const baseURL = "https://qfshmg27-8000.brs.devtunnels.ms/";
-export const baseURL = "https://vps-3503468-x.dattaweb.com/"
+// export const baseURL = "https://vps-3503468-x.dattaweb.com/"
 
 function handleErrors(error) {
   if (error.response) {
@@ -82,9 +82,14 @@ export async function getPromosAPI() {
   }
 }
 
-export async function getRutinaAPI(dni, sesion) {
+export async function getRutinaAPI(dni, sesion, authTokens) {
   try {
-    const response = await axios.get(`${baseURL}rutina/${dni}/${sesion}`);
+    const response = await axios.get(`${baseURL}rutina/${dni}/${sesion}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authTokens?.access}`,
+      },
+    });;
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     return { data: response.data };
@@ -93,9 +98,15 @@ export async function getRutinaAPI(dni, sesion) {
   }
 }
 
-export async function getSesionesAPI(dni) {
+export async function getSesionesAPI(dni, authTokens) {
   try {
-    const response = await axios.get(`${baseURL}sesiones/${dni}`);
+    const response = await axios.get(`${baseURL}sesiones/${dni}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authTokens?.access}`,
+      },
+    });
+
     // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     return { data: response.data };
@@ -138,6 +149,35 @@ export async function logUserEntranceAPI(dni) {
   try {
     const response = await axios.get(`${baseURL}admin_usuario/${dni}`);
     return { userData: response.data };
+  } catch (error) {
+    return handleErrors(error);
+  }
+}
+
+
+export async function viewPdfAPI(dni, authTokens) {
+  try {
+    const response = await fetch(`${baseURL}/pdf_view/${dni}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authTokens?.access}`,
+      },
+    });
+
+    if (!response.ok) {
+      // Handle error response
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
+
+    // Read the response as a blob
+    const pdfBlob = await response.blob();
+
+    // Create a Blob URL
+    const pdfBlobUrl = URL.createObjectURL(pdfBlob);
+
+    // Open the PDF in a new tab
+    window.open(pdfBlobUrl, "_blank");
   } catch (error) {
     return handleErrors(error);
   }

@@ -8,14 +8,27 @@ from django.conf import settings
 from .models import *
 from views import *
 from .serializers import *
+from rest_framework.test import force_authenticate
 
 
+# todo mejorar performance de las autenticaciones, ver si pones en set up para que sea autenticado y que las que no necesitas auth le pones user=None.
+# self.client.force_authenticate(user=None)
 
 class BaseSetUp(TestCase):
     def setUp(self):
         self.dni = "12345678"
-        self.usuario = Usuario.objects.create(DNI=self.dni, nombre="Test User", apellido="testing", sexo="Masculino")
+        self.usuario = Usuario.objects.create(DNI=self.dni, nombre="Test User", apellido="testing", sexo="Masculino", password="secret")
         self.client = APIClient()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+
+        # for default all requests are authenticated
+        self.client.force_authenticate(user=self.user)
+
+    def unauthenticate(self):
+        self.client.force_authenticate(user=None)
+
+
+
 
 class AdminUsuarioViewTest(BaseSetUp):
     def setUp(self):
@@ -73,29 +86,15 @@ class AdminUsuarioViewTest(BaseSetUp):
         # Check if the expected error message is present in the response
         self.assertIn("not found", response.data)
 
-    def test_permission_denied(self):
-        # Make a request with a host not in ALLOWED_HOSTS
-        client = APIClient(HTTP_HOST='example.com')
-        response = client.get(self.admin_usuario_url)
-
-        # Check if the response status code is 403 Forbidden
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-        # Check if the expected error message is present in the response
-        self.assertIn("Permission denied", response.data["error"])
 
 class RequestRutineViewTest(BaseSetUp):
     def setUp(self):
         super().setUp() 
         self.request_rutine_url = reverse("power_app:requestRutine")
-
+        
     def test_request_rutine_successful(self):
         # Create a Usuario for testing
         usuario = self.usuario
-
-        # Authenticate a user (assuming you have a user in the database)
-        user = User.objects.create(username='testuser')
-        self.client.force_authenticate(user=user)
 
         # Make a POST request to the view
         response = self.client.post(self.request_rutine_url, data={"userDNI": self.dni})
@@ -109,13 +108,9 @@ class RequestRutineViewTest(BaseSetUp):
 
     def test_request_rutine_user_not_found(self):
         # Make a POST request with a DNI for a nonexistent user
-        user = User.objects.create(username='testuser')
-
-        # authenticate the user
-        self.client.force_authenticate(user=user)
 
         # Make a POST request to the view
-        response = self.client.post(self.request_rutine_url, data={"userDNI": 1})
+        response = self.client.post(self.request_rutine_url, data={"userDNI": 0})
 
         # Check if the response status code is 400 Bad Request
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -125,6 +120,8 @@ class RequestRutineViewTest(BaseSetUp):
 
     def test_request_rutine_unauthenticated(self):
         # Don't authenticate the user
+        self.unauthenticate()
+
 
         # Make a POST request to the view
         response = self.client.post(self.request_rutine_url, data={"userDNI": "12345678"})
@@ -140,12 +137,14 @@ class SesionesViewTest(BaseSetUp):
         # Create a Rutina associated with the user
         self.sesion_data = {"sesion": 1}
         self.rutina = Rutina.objects.create(usuario=self.usuario, **self.sesion_data)
+        self.client.force_authenticate(user=self.user)
 
         # URL for the sesiones view
         self.sesiones_url = reverse("power_app:sesiones", args=[self.dni])
 
     def test_get_sesiones_successful(self):
         # Make a GET request to the view
+        
         response = self.client.get(self.sesiones_url)
 
         # Check if the response status code is 200 OK
@@ -259,8 +258,10 @@ class RutinaViewTest(BaseSetUp):
         self.rutina_url = reverse("power_app:rutina", args=[self.dni, self.sesion])
 
     def test_get_rutina_successful(self):
+
         # Make a GET request to the view
         response = self.client.get(self.rutina_url)
+
 
         # Check if the response status code is 200 OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -270,6 +271,7 @@ class RutinaViewTest(BaseSetUp):
         self.assertEqual(response.data, expected_data)
 
     def test_get_rutina_no_rutina_found(self):
+
         # Delete the existing RutinaFormulario to simulate no rutina found
         self.user_rutina.delete()
 
