@@ -32,16 +32,15 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-
 class TarifaThrottle(UserRateThrottle):
     scope = 'tarifas'
-
 
 class ServiciosThrottle(UserRateThrottle):
     scope = 'servicios'
 
 class AdminThrottle(UserRateThrottle):
     scope = 'admin'
+    
 
 @api_view(["GET", "POST"])
 @throttle_classes([AdminThrottle])
@@ -72,7 +71,6 @@ def admin_usuario(request, dni):
 
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
-
 def usuario(request, dni):
     if request.method == "GET":
         try:
@@ -111,7 +109,6 @@ def upload_excel(request):
 
         return HttpResponseRedirect(reverse("admin:index"))
 
-# TODO TEST
 def graphics(request):
     data_generator = GraphicsDataGenerator()
     data = data_generator.generate_graphics_data()
@@ -121,7 +118,6 @@ def graphics(request):
 # ? @staticmethod decorator is a good practice for methods that don't need access to instance attributes and are more like utility functions. It clarifies that these methods are not bound to instance-specific data and can be called on the class itself.
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-
 def request_rutine(request):
     if request.method == "POST":
         try:

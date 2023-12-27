@@ -7,6 +7,7 @@ import Image from "react-bootstrap/Image";
 import Links from "./Links";
 import OffCanvas from "./OffCanvas";
 import { NavStyles } from "./StylesNav";
+import logoIcon from "../../assets/favicon.ico";
 
 function NavMain() {
   const [show, setShow] = useState(false);
@@ -23,11 +24,9 @@ function NavMain() {
     <NavStyles>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg" fixed="top">
         <Container fluid>
-          <Navbar.Brand href="#">
+          <Navbar.Brand href="/">
             <Image
-              src={
-                "https://res.cloudinary.com/drlw6rsyu/image/upload/e_improve:outdoor/c_crop,g_auto,h_500,w_655/power-gym-carrousel/ybm3qbhygw5th7sthtnh.jpg"
-              }
+              src={logoIcon}
               alt="Logo Power"
               style={{ maxWidth: "50px", maxHeight: "50px" }}
             ></Image>

@@ -6,9 +6,8 @@ import { toast } from "sonner";
 //   ? import.meta.env.DEVELOP_URL_ENV
 //   : import.meta.env.BUILD_URL_ENV;
 // export const baseURL ="http://127.0.0.1:8000/" 
-// export const baseURL = "https://power-gym.com.ar/"
-// export const baseURL = "https://qfshmg27-8000.brs.devtunnels.ms/";
-export const baseURL = "https://vps-3503468-x.dattaweb.com/"
+export const baseURL = "https://power-gym.com.ar/"
+// export const baseURL = "https://vps-3503468-x.dattaweb.com/"
 
 function handleErrors(error) {
   if (error.response) {
