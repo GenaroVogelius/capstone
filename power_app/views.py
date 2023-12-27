@@ -12,7 +12,7 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.views import View
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -27,13 +27,25 @@ from rest_framework.decorators import throttle_classes
 from django.views.decorators.http import etag
 
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-@api_view(["GET", "POST"])
-def admin_usuario(request, dni):
 
+class TarifaThrottle(UserRateThrottle):
+    scope = 'tarifas'
+
+
+class ServiciosThrottle(UserRateThrottle):
+    scope = 'servicios'
+
+class AdminThrottle(UserRateThrottle):
+    scope = 'admin'
+
+@api_view(["GET", "POST"])
+@throttle_classes([AdminThrottle])
+def admin_usuario(request, dni):
     if request.method == "GET":
         try:
             usuario = Usuario.objects.get(DNI=dni)
@@ -130,7 +142,6 @@ def request_rutine(request):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-
 def sesiones(request, dni):
     if request.method == "GET":
         sesiones_list = Rutina.objects.filter(usuario__DNI=dni).values_list('sesion', flat=True)
@@ -157,6 +168,7 @@ def sesiones(request, dni):
 
 
 @api_view(["GET"])
+@throttle_classes([ServiciosThrottle])
 def servicios(request):
     if request.method == "GET":
         try:
@@ -174,14 +186,14 @@ def servicios(request):
 
 
 @api_view(["GET"])
+@throttle_classes([TarifaThrottle])
 def tarifas(request):
     if request.method == "GET":
         try:
             tarifas = Tarifa.objects.all()
             if not tarifas:
                 raise Tarifa.DoesNotExist
-
-                
+            
             serializer = TarifaSerializer(tarifas, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Tarifa.DoesNotExist:
