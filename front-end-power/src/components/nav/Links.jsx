@@ -7,7 +7,7 @@ import { StyledNavLink } from "./StylesNav";
 import React, { useEffect, useState, useContext } from "react";
 import { DatosDeContexto } from "../../Context/Context";
 
-function Links({ setShow }) {
+function Links() {
   const [currentPath, setCurrentPath] = useState("");
   const { authTokens, logoutUser } = useContext(DatosDeContexto);
 
