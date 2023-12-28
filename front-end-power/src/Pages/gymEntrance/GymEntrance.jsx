@@ -52,8 +52,7 @@ function gymEntrance() {
               {userData.nombre}
             </h2>
             <h3>
-              Tu cuota {userData.days_to_vencimiento < 0 ? "venció" : "vence"}
-              el {userData.vencimiento} ({userData.days_to_vencimiento} días)
+              Tu cuota {userData.days_to_vencimiento < 0 ? "venció" : "vence"} el {userData.vencimiento} ({userData.days_to_vencimiento} días)
             </h3>
           </div>
         ) : (

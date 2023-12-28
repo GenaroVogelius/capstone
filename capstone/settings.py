@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'tarifas': '20/hour',
         'servicios': '20/hour',
-        'admin': '10/minute',
+        'admin': '15/minute',
     }
 }
 SIMPLE_JWT = {
