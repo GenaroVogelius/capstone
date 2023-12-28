@@ -18,6 +18,6 @@ jobs:
     steps:
     - name: console steps
       run: |
-        cd /home/vps-3503468-x.dattaweb.com/public_html/capstone
+        cd /home/power-gym.com.ar/public_html/capstone
         sudo bash ./build.sh
         
