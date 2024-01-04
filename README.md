@@ -20,7 +20,7 @@
     <br />
     <strong></strong>
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://www.youtube.com/watch?v=dSgPigf97bU">View Demo</a>
         <br />
         <a href="https://power-gym.com.ar">URL of Gym Page</a>
   </p>
