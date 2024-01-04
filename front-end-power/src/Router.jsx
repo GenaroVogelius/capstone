@@ -13,7 +13,7 @@ import SoySocio from "./Pages/main_page/SoySocio";
 import CommonComponents from "./components/CommonComponets/CommonComponents";
 
 const SoySocioOrLogIn = () => {
-  const { isUserAuth, loading, authTokens, userInfo } =
+  const { authTokens} =
     useContext(DatosDeContexto);
 
   return authTokens ? <SoySocio /> : <LogIn />;

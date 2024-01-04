@@ -1,17 +1,10 @@
-import { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
-import { DatosDeContexto } from "../../Context/Context";
 import { StyledHeading } from "./StyledHeading";
 import SubHeading from "./SubHeading";
 
-function Heading({ first_word, second_word, subHeading }) {
-  const { currentPath } = useContext(DatosDeContexto);
-
-  // const { currentPath } = useContext(DatosDeContexto);
-  // console.log(currentPath)
-
+function Heading({ first_word, second_word, paddingtop, subHeading }) {
   return (
-    <StyledHeading>
+    <StyledHeading paddingtop={paddingtop}>
       <div className="site-heading text-center">
         <h2>
           {first_word || <Skeleton />}

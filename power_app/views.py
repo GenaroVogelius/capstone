@@ -1,12 +1,9 @@
 # Create your views here.
 from io import BytesIO
 from pathlib import Path
-
 import pandas
-from django.conf import settings
 from django.contrib import messages
-from django.http import (HttpResponse, HttpResponseForbidden,
-                         HttpResponseRedirect)
+from django.http import (HttpResponse,HttpResponseRedirect)
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.urls import reverse
@@ -17,15 +14,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from xhtml2pdf import pisa
-
 from .models import *
 from .serializers import *
 from .utils import GraphicsDataGenerator
 from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.decorators import throttle_classes
-from django.views.decorators.http import etag
-
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -40,7 +34,7 @@ class ServiciosThrottle(UserRateThrottle):
 
 class AdminThrottle(UserRateThrottle):
     scope = 'admin'
-    
+
 
 @api_view(["GET", "POST"])
 @throttle_classes([AdminThrottle])
@@ -144,23 +138,6 @@ def sesiones(request, dni):
 
         sesiones_list = list(sesiones_list)
         return Response({"sesiones": sesiones_list}, status=status.HTTP_200_OK)
-
-    # if request.method == "GET":
-
-    #     # inicializas la clase de pagination
-
-    #     posts = Post.objects.all().order_by("-timestamp")
-    #     posts_count = posts.count()
-    #     # dentro de la clase llamas al metodo paginate_queryset, que recibe como primer parametro que es lo que va a devolver y como segundo parametro la request, dentro de la request va a haber algo llamado offset que seria desde donde te trae data, por ej posts/?offset=7 te trae los post desde el 7 en adelante.
-
-    #     paginated_posts = pagination_class.paginate_queryset(posts, request, request.path_info)
-    #     # en paginated posts se guardan esos posts y los serializas abajo
-
-    #     serializer = PostSerializer(
-    #         paginated_posts, many=True, context={"request": request, "posts_count": posts_count}
-    #     )
-
-    #     return Response({"posts":serializer.data}, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])

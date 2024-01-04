@@ -20,12 +20,14 @@ function gymEntrance() {
 
   // ? en react si pones autofocus es Focus con la f en mayuscula a diferencia de html
 
-  // esto si encuentra al user
-  console.log(userData);
+
 
   const userActiveColor = "linear-gradient(rgb(47 167 4), rgb(96 235 5))";
   const userInactiveColor = "linear-gradient(rgb(155 3 3), rgb(240 7 7))";
   const userNotFoundColor = "linear-gradient(rgb(200 189 5), rgb(240 225 7))";
+
+  console.log(userData?.sexo);
+  console.log(userData && userData.sexo);
   return (
     <>
       {isLoading && <LoadingBox />}
@@ -48,7 +50,7 @@ function gymEntrance() {
         ) : userData?.nombre ? (
           <div>
             <h2>
-              {(userData.sexo = "Masculino" ? "Bienvenido" : "Bienvenida")}{" "}
+              {(userData.sexo === "Masculino" ? "Bienvenido" : "Bienvenida")}{" "}
               {userData.nombre}
             </h2>
             <h3>

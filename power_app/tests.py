@@ -318,3 +318,6 @@ class CarrouselViewTest(BaseSetUp):
         # Check if the response contains the expected error message
         expected_error = {"not_found": "No hay fotos para mostrar"}
         self.assertEqual(response.data, expected_error)
+
+
+

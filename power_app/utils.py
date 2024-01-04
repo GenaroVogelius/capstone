@@ -1,10 +1,11 @@
 import json
 from datetime import time, timedelta
+
 import pandas
 from django.db.models import Q
 from django.utils import timezone
-from .models import Asistencia, Usuario
 
+from .models import Asistencia, Usuario
 
 
 def delete_old_asistencias():
@@ -62,15 +63,16 @@ class GraphicsDataGenerator:
         expected_dates = [min_date + timedelta(days=x) for x in range((max_date - min_date).days + 1)]
         
         # Find the missing dates by comparing the expected dates with the unique dates in the DataFrame
-        missing_dates_index = []
+        missing_dates = []
+        days_with_assistance = asistencias_df['dia'].unique()
         contador=0
         for date in expected_dates:
-            contador+=1
-            if date not in asistencias_df['dia'].unique():
-                if date.weekday() != 6:
-                    missing_dates_index.append(contador)
+            
+            if date not in days_with_assistance:
+                missing_dates.append(contador)
+            contador += 1
 
-        return missing_dates_index
+        return missing_dates
 
     def get_asistencias_per_month(self):
         """
@@ -128,7 +130,7 @@ class GraphicsDataGenerator:
       
         #? es para cambiar el formato de año-mes-dia a dia/mes
         time_slice_counts_per_day_df['dia'] = time_slice_counts_per_day_df['dia'].apply(change_date_order)
-
+        
         return time_slice_counts_per_day_df
 
     def process_daily_total_arrivals(self, time_slice_counts_per_day_df):
@@ -141,7 +143,12 @@ class GraphicsDataGenerator:
             dict: Dictionary containing daily total arrivals data.
         """
         
+
         daily_total_arrivals_df = time_slice_counts_per_day_df.groupby('dia')['persons_arrive_per_time'].sum()
+
+        # esto es para que te quede el dia de hoy al final del dataframe
+        daily_total_arrivals_df = daily_total_arrivals_df.loc[time_slice_counts_per_day_df['dia'].unique()]
+
         json_data_pandas_daily_total_arrivals = daily_total_arrivals_df.to_json(orient='index')
         daily_total_arrivals_dict = json.loads(json_data_pandas_daily_total_arrivals)
         return daily_total_arrivals_dict
@@ -158,14 +165,20 @@ class GraphicsDataGenerator:
         """
 
 
-        def dict_time_count(row):
-            return {time: count for time, count in zip(row['time_slice'], row['persons_arrive_per_time'])}
+        def dict_time_count(group):
+            return dict(zip(group['time_slice'], group['persons_arrive_per_time']))
 
         #? Group by 'dia' and apply the function to each group, reset_index es para que la columna que tiene los     diccionarios se llame time_counts
+
         day_and_time_df = time_slice_counts_per_day_df.groupby('dia').apply(dict_time_count).reset_index(name='time_counts')
+
+        day_and_time_df = day_and_time_df.set_index('dia').reindex(time_slice_counts_per_day_df['dia'].unique()).reset_index()
+
+
+        
         # ?inplace es True: El DataFrame original se modificará directamente y no se devolverá un nuevo DataFrame
         day_and_time_df.set_index('dia', inplace=True)
-        
+
 
 
         # ?con orient index vas a utilizar el indice como key el resto como value
@@ -252,19 +265,3 @@ class GraphicsDataGenerator:
             "asistencias_per_month_dict":asistencias_per_month_dict,
             "active_and_no_active_members_dict": active_and_no_active_members_dict,
         }
-
-
-
-def custom_user_authentication_rule(user):
-    return user is not None and user.is_active
-# class CustomJWTAuthentication(JWTAuthentication):
-#     def decode_handler(self, token):
-#         print("yes")
-#         # Call the parent decode_handler to get the payload
-#         payload = super().decode_handler(token)
-
-#         # Check if 'DNI' and 'password' are present in the payload
-#         if 'DNI' not in payload or 'password' not in payload:
-#             raise AuthenticationFailed('Invalid payload')
-
-#         return payload

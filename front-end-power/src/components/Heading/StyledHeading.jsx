@@ -13,6 +13,7 @@ export const StyledHeading = styled.div`
     display: block;
     font-weight: 700;
     text-transform: uppercase;
+    padding-top: ${(props) => props.paddingtop || "0"};
   }
 
   .site-heading h2 span {
@@ -24,17 +25,6 @@ export const StyledHeading = styled.div`
     position: relative;
     z-index: 1;
   }
-
-  /* .site-heading h4::before {
-    background: ${secondaryColor} none repeat scroll 0 0;
-    bottom: 0;
-    content: "";
-    height: 2px;
-    left: 50%;
-    margin-left: -25px;
-    position: absolute;
-    width: 50px;
-  } */
 
   .site-heading {
     overflow: hidden;
