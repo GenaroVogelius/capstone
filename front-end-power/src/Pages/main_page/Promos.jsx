@@ -12,16 +12,13 @@ const Promos = () => {
   const second_word = "Promociones";
   const first_word = "Nuestras";
 
-  // const promociones = promos ? promos : Array(3).fill(0);
-
   const [promociones, setPromociones] = useState(false);
 
-
-    useEffect(() => {
-      if (promos) {
-        setPromociones(promos);
-      }
-    }, [promos]);
+  useEffect(() => {
+    if (promos) {
+      setPromociones(promos);
+    }
+  }, [promos]);
 
   useEffect(() => {
     if (!promos) {
@@ -31,13 +28,16 @@ const Promos = () => {
 
   return (
     <div style={{ marginTop: "4rem" }}>
-      <Heading second_word={second_word} first_word={first_word} />
+      <Heading
+        second_word={second_word}
+        first_word={first_word}
+        paddingtop="1rem"
+      />
       {promociones ? (
         <Precios promociones={promociones} completed={completed} />
       ) : (
-        <SkeletonPrecios/>
+        <SkeletonPrecios />
       )}
-      {/* /* {isPromosDefault ? <LoadingBox /> : ""} */}
     </div>
   );
 };

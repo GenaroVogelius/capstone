@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import {
+  appearAnimation,
   primaryColor,
   secondaryColor,
   thirdColor,
-  appearAnimation,
 } from "../../StyleVariables/StyleVariables";
 
 export const StyledPrecios = styled.div`
@@ -522,7 +522,7 @@ export const StyledPrecios = styled.div`
     z-index: 999;
     top: 4px;
     width: fit-content;
-    max-width: 5.4rem;
+    max-width: 5.2rem;
     line-height: initial;
     position: absolute;
     left: -0.4rem;

@@ -1,22 +1,15 @@
 
 
-
-
-
-
-
-
-
 // ?argument 0 indicates that no elements should be removed during the insertion;
 indexDatesMissing.forEach(dateIndex => { 
   daysList.splice(dateIndex-1, 0, "Feriado");
  })
 
 if (daysList.length !== 7) {
-  daysList.unshift("feriado");
+  daysList.unshift("Feriado");
 };
  
- console.log(daysList)
+
 
 let isSaturday = 0;
 
@@ -27,35 +20,24 @@ function getDates(numb) {
   let currentDateNumber = currentDateToModify.getDate();
 
   currentDateToModify.setDate(currentDateNumber - numb);
+
   
+  //  if (currentDateToModify.getDay() === 0) {
+  //    currentDateToModify.setDate(currentDateNumber - numb - 1);
+  //  }
+  //   console.log(currentDateToModify);
 
-  if (currentDateToModify.toString().includes("Sun")) {
-    currentDateToModify.setDate(currentDateNumber - numb - 1);
-  }
-
-    // ? si la fecha modifica incluye sabado y issabado es mayor que 2 y la fecha corriente no es sabado
+    // ? si la fecha modificada incluye sabado y issabado es mayor que 2 y la fecha corriente no es sabado
     if (currentDateToModify.toString().includes("Sat") || isSaturday >= 2 && !currentDate.toString().includes("Sat"))  {
       isSaturday += 1;
       if (isSaturday >= 2) {
         currentDateToModify.setDate(currentDateNumber - numb + 1);
       }
     }
-    let formattedDate = currentDateToModify.toLocaleDateString("es-ES", options);
+  let formattedDate = currentDateToModify.toLocaleDateString("es-ES", options);
+
     return formattedDate;
   }
-
-
-// let todayNumber = todayAllDate.getDate(); 
-// var yesterday = new Date(todayAllDate);
-// console.log(todayNumber)
-// todayAllDate.setDate(todayAllDate.getDate() - 1);
-
-// console.log(yesterday);
-
-// var options = { weekday: "long", month: "short", day: "numeric" };
-// var formattedDate = todayAllDate.toLocaleDateString("es-ES", options);
-
-// console.log(formattedDate);
 
 
 
@@ -151,7 +133,8 @@ const colorBorder = [
   "rgb(128, 0, 128)",
 ];
 
-//       "Lunes","Martes","Miercoles","Jueves","Viernes","Sábado",
+
+
 
   const AsistenciaDia7 = allValuesLists[0]
   const AsistenciaDia6 = allValuesLists[1]
@@ -171,42 +154,42 @@ let configLineChartWeek = {
     labels: HORARIOS,
     datasets: [
       {
-        label: getDates(7),
+        label: getDates(6),
         backgroundColor: colorBackground[0],
         borderColor: colorBorder[0],
         data: AsistenciaDia7,
         fill: true,
       },
       {
-        label: getDates(6),
+        label: getDates(5),
         fill: true,
         backgroundColor: colorBackground[1],
         borderColor: colorBorder[1],
         data: AsistenciaDia6,
       },
       {
-        label: getDates(5),
+        label: getDates(4),
         fill: true,
         backgroundColor: colorBackground[2],
         borderColor: colorBorder[2],
         data: AsistenciaDia5,
       },
       {
-        label: getDates(4),
+        label: getDates(3),
         fill: true,
         backgroundColor: colorBackground[3],
         borderColor: colorBorder[3],
         data: AsistenciaDia4,
       },
       {
-        label: getDates(3),
+        label: getDates(2),
         fill: true,
         backgroundColor: colorBackground[4],
         borderColor: colorBorder[4],
         data: AsistenciaDia3,
       },
       {
-        label: getDates(2),
+        label: getDates(1),
         fill: true,
         backgroundColor: colorBackground[5],
         borderColor: colorBorder[5],
@@ -460,5 +443,3 @@ new Chart(ctx2, configBarChartMonths)
 new Chart(ctx3, configBarPerDay);
 new Chart(ctx4, configPieChartSex);
 new Chart(ctx5, configPieChartMembers);
-
-
